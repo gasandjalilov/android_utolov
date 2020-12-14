@@ -238,10 +238,10 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/card_config_button_create"
                 android:gravity="center"
-                app:icon="@drawable/ic_trash"
+                app:icon="@drawable/ic_baseline_credit_card_24"
                 app:iconTint="@color/colorPrimary"
                 app:iconGravity="textStart"
-                android:text="@string/card_config_card_delete"
+                android:text="@string/card_config_card_create"
                 android:textColor="@color/colorPrimary"
                 app:backgroundTint="@color/whiteText"
                 android:background="@drawable/textedit_rounded"

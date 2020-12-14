@@ -61,4 +61,7 @@
     <string name="card_config_card_makemain">Make default</string>
     <string name="card_config_card_block">Block card</string>
     <string name="card_config_card_delete">Delete card</string>
+    <string name="card_config_card_create">Save card</string>
+
+
 </resources>
