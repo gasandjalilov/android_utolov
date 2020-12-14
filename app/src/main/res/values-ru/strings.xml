@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ucell U-tolov</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="username">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="login_button">Вход</string>
+    <string name="registration">Регистрация</string>
+    <string name="activation_info">Код Активации будет отправлен в SMS сообщении. Убедитесь что ваше устройство может принимать их</string>
+    <string name="registration_button_login">Логин</string>
+    <string name="registration_button_registration">Регистрация</string>
+
+    <!--pin-->
+    <string name="pin_enter_pin">Введите OTP</string>
+    <string name="pin_enter_pin1">Enter PIN</string>
+    <string name="pin_enter_pin_again">Подтвердите PIN</string>
+    <string name="pin_enter_wrong">Неверный PIN</string>
+    <string name="pin_enter_pin_again_wrong">Неверный PIN, Пожалуйста введите PIN для подтверждения</string>
+    <string name="pin_use_biometrics">Использовать биометрическую авторизацию</string>
+
+
+
+    <!--menu-->
+    <string name="main_navbar_bottom">Главная</string>
+    <string name="transfer_navbar_bottom">Переводы</string>
+    <string name="payment_navbar_bottom">Оплата</string>
+    <string name="configuration_navbar_bottom">Настройки</string>
+    <string name="menu_navbar_bottom">Меню</string>
+
+    <!--home-->
+    <string name="home_balance">Общий баланс</string>
+    <string name="home_balance_hide">Скрыть баланс</string>
+    <string name="home_qr">QR Оплата</string>
+    <string name="home_u_point">U-Баллы</string>
+    <string name="home_cards">Мои карты</string>
+    <string name="home_support">Служба поддержки</string>
+    <string name="home_pay_mobile">Оплата сотовой связи</string>
+    <string name="home_request_pay">Запрос средств</string>
+    <string name="home_pay_request">Перевод средств</string>
+    <string name="home_last_transactions">Недавние транзакции</string>
+
+
+    <!--card-->
+    <string name="card_balance">Баланс</string>
+    <string name="card_cur">Сум</string>
+    <string name="card_my_cards">Мои карты</string>
+    <string name="card_all">Все</string>
+    <string name="card_uzcard">Uzcard</string>
+    <string name="card_humo">Humo</string>
+    <string name="card_configure">Настройки карты</string>
+
+    <!--card configuration-->
+    <string name="card_config_title">Настройка карт</string>
+    <string name="card_config_card_name">Название карты</string>
+    <string name="card_config_card_makemain">Сделать основной</string>
+    <string name="card_config_card_block">Заблокировать карту</string>
+    <string name="card_config_card_delete">Удалить карту</string>
+
+</resources>

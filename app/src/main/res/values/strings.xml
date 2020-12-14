@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">Ucell U-tolov</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="ru_lang" translatable="false">Русский</string>
+    <string name="uz_lang" translatable="false">O\'zbek</string>
+    <string name="en_lang" translatable="false">English</string>
+
+
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login_button">Login</string>
+    <string name="registration">Registration</string>
+    <string name="activation_info">Код Активации будет отправлен в SMS сообщении. Убедитесь что ваше устройство может принимать их</string>
+    <string name="registration_button_login">Login</string>
+    <string name="registration_button_registration">Registration</string>
+
+    <!--pin-->
+    <string name="pin_enter_pin">Enter OTP</string>
+    <string name="pin_enter_pin1">Enter PIN</string>
+    <string name="pin_enter_pin_again">Confirm PIN</string>
+    <string name="pin_enter_wrong">Wrong PIN</string>
+    <string name="pin_enter_pin_again_wrong">Wrong PIN, Please enter confirm PIN</string>
+    <string name="pin_use_biometrics">Use biometrics</string>
+
+
+    <!--menu-->
+    <string name="main_navbar_bottom">Main Page</string>
+    <string name="transfer_navbar_bottom">Transferes</string>
+    <string name="payment_navbar_bottom">Payments</string>
+    <string name="configuration_navbar_bottom">Configurations</string>
+    <string name="menu_navbar_bottom">Menu</string>
+
+
+    <!--home-->
+    <string name="home_balance">Overall Balance</string>
+    <string name="home_balance_hide">Hide Balance</string>
+    <string name="home_qr">QR Pay</string>
+    <string name="home_u_point">U-Points</string>
+    <string name="home_cards">My Cards</string>
+    <string name="home_support">Support</string>
+    <string name="home_pay_mobile">Pay for mobile</string>
+    <string name="home_request_pay">Request amount</string>
+    <string name="home_pay_request">Make amount</string>
+    <string name="home_last_transactions">Last transactions</string>
+
+
+    <!--card-->
+    <string name="card_balance">Balance</string>
+    <string name="card_cur">Sum</string>
+    <string name="card_my_cards">My Cards</string>
+    <string name="card_all">All</string>
+    <string name="card_uzcard">Uzcard</string>
+    <string name="card_humo">Humo</string>
+    <string name="card_configure">Configure card</string>
+
+    <!--card configuration-->
+    <string name="card_config_title">Configure Card</string>
+    <string name="card_config_card_name">Card Name</string>
+    <string name="card_config_card_makemain">Make default</string>
+    <string name="card_config_card_block">Block card</string>
+    <string name="card_config_card_delete">Delete card</string>
+</resources>

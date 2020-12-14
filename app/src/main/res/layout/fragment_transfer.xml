@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.TransferFragment">
+
+
+    <EditText
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:id="@+id/editTextNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:drawableStart="@drawable/ic_baseline_credit_card_24"
+        android:drawablePadding="15dp"
+        android:hint="8600 **** **** ****"
+        android:maxLength="22"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.199" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="40dp"
+        android:background="@android:color/transparent"
+        android:text="Запрос на пополнение"
+        android:textColor="@color/colorAccent"
+        app:backgroundTint="@color/whiteText"
+        app:icon="@drawable/ic_baseline_card_giftcard_24"
+        app:iconGravity="textStart"
+        app:iconPadding="15dp"
+        app:iconTint="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumber"
+        app:layout_constraintVertical_bias="0.88" />
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="40dp"
+        android:text="Получатели"
+        android:background="@android:color/transparent"
+        android:textColor="@color/colorAccent"
+        app:backgroundTint="@color/whiteText"
+        app:icon="@drawable/ic_baseline_people_24"
+        app:iconGravity="textStart"
+        app:iconPadding="15dp"
+        app:iconTint="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/button8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumber"
+        app:layout_constraintVertical_bias="0.921" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="40dp"
+        android:text="История"
+
+        android:background="@android:color/transparent"
+        android:textColor="@color/colorAccent"
+        app:backgroundTint="@color/whiteText"
+        app:icon="@drawable/ic_baseline_history_book_24"
+        app:iconGravity="textStart"
+        app:iconPadding="15dp"
+        app:iconTint="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/button6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumber"
+        app:layout_constraintVertical_bias="0.918" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="40dp"
+        android:text="Перевод на другую карту"
+        android:background="@android:color/transparent"
+        android:textColor="@color/colorAccent"
+        app:backgroundTint="@color/whiteText"
+        app:icon="@drawable/ic_baseline_credit_card_24"
+        app:iconGravity="textStart"
+        app:iconPadding="15dp"
+        app:iconTint="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/button9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.053"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumber"
+        app:layout_constraintVertical_bias="0.947" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

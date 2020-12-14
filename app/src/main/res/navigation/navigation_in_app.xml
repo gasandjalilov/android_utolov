@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="uz.rdu.ucell_utolov.fragments.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_cardActionFragment"
+            app:destination="@id/cardActionFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="uz.rdu.ucell_utolov.fragments.PaymentFragment"
+        android:label="fragment_payment"
+        tools:layout="@layout/fragment_payment">
+        <action
+            android:id="@+id/action_paymentFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="uz.rdu.ucell_utolov.fragments.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_transferFragment"
+            app:destination="@id/transferFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/transferFragment"
+        android:name="uz.rdu.ucell_utolov.fragments.TransferFragment"
+        android:label="fragment_transfer"
+        tools:layout="@layout/fragment_transfer" />
+    <fragment
+        android:id="@+id/cardActionFragment"
+        android:name="uz.rdu.ucell_utolov.fragments.CardActionFragment"
+        android:label="CardActionFragment">
+        <action
+            android:id="@+id/action_cardActionFragment_to_cardConfigurationFragment"
+            app:destination="@id/cardConfigurationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cardConfigurationFragment"
+        android:name="uz.rdu.ucell_utolov.fragments.CardConfigurationFragment"
+        android:label="fragment_card_configuration"
+        tools:layout="@layout/fragment_card_configuration">
+        <argument
+            android:name="card_object"
+            app:argType="uz.rdu.ucell_utolov.models.profilemodels.ProfileResponse" />
+    </fragment>
+
+
+</navigation>

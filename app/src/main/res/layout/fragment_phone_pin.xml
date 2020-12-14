@@ -1,0 +1,121 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vmodel"
+            type="uz.rdu.ucell_utolov.modelviews.PhonePinViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        app:layout_animate="@{vmodel.isAnimation}"
+        android:background="@drawable/ic_background_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView2"
+            android:backgroundTint="@color/colorPrimaryAlpha"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:contentDescription="TODO"
+                    android:paddingLeft="90dp"
+                    android:paddingRight="90dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.112"
+                    app:srcCompat="@drawable/ic_logo"
+                    tools:ignore="VectorDrawableCompat" />
+
+                <TextView
+                    android:id="@+id/PinText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pin_enter_pin1"
+                    android:textColor="@color/whiteText"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toTopOf="@+id/indicator_dots"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                    app:layout_constraintVertical_bias="0.655" />
+
+                <com.andrognito.pinlockview.IndicatorDots
+                    android:id="@+id/indicator_dots"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:pinLength="5"
+                    app:dotDiameter="14dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.39" />
+
+                <com.andrognito.pinlockview.PinLockView
+                    android:id="@+id/pin_lock_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:dotDiameter="12dp"
+                    app:keypadButtonSize="72dp"
+                    app:keypadHorizontalSpacing="30dp"
+                    app:keypadShowDeleteButton="false"
+                    app:keypadTextColor="@color/whiteText"
+                    app:keypadTextSize="24dp"
+                    app:keypadVerticalSpacing="18dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.497"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/indicator_dots"
+                    app:layout_constraintVertical_bias="0.291"
+                    app:pinLength="5" />
+
+                <Switch
+                    android:id="@+id/biometricswitch"
+                    android:layout_width="278dp"
+                    android:layout_height="46dp"
+                    android:enabled="true"
+                    android:text="@string/pin_use_biometrics"
+                    android:textColor="@color/whiteText"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pin_lock_view"
+                    app:layout_constraintVertical_bias="0.29" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

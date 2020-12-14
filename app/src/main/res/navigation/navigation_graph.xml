@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/startupFlashScreenFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="uz.rdu.ucell_utolov.fragments.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main">
+        <argument
+            android:name="user_object"
+            app:argType="uz.rdu.ucell_utolov.models.AdvUser"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/startupFlashScreenFragment"
+        android:name="uz.rdu.ucell_utolov.fragments.StartupFlashScreenFragment"
+        android:label="StartupFlashScreenFragment" >
+        <action
+            android:id="@+id/action_startupFlashScreenFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment"
+            app:enterAnim="@anim/slide_in_left_fragment"
+            app:exitAnim="@anim/slide_out_right_fragment"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/slide_exit_fragment" />
+        <action
+            android:id="@+id/action_startupFlashScreenFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="uz.rdu.ucell_utolov.fragments.RegistrationFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/action_registrationFragment_to_pinFragment"
+            app:destination="@id/pinFragment">
+        </action>
+        <action
+            android:id="@+id/action_registrationFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pinFragment"
+        android:name="uz.rdu.ucell_utolov.fragments.PinFragment"
+        android:label="fragment_pin"
+        tools:layout="@layout/fragment_pin" >
+        <action
+            android:id="@+id/action_pinFragment_to_phonePinFragment"
+            app:destination="@id/phonePinFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/phonePinFragment"
+        android:name="uz.rdu.ucell_utolov.fragments.PhonePinFragment"
+        android:label="PhonePinFragment" >
+        <action
+            android:id="@+id/action_phonePinFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pinAuthFragment"
+        android:name="uz.rdu.ucell_utolov.fragments.PinAuthFragment"
+        android:label="PinAuthFragment" >
+        <action
+            android:id="@+id/action_pinAuthFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+
+
+</navigation>
