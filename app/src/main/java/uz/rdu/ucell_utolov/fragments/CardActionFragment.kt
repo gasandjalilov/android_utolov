@@ -44,7 +44,7 @@ class CardActionFragment : Fragment() {
         cardsBinding.vmodel = cardActionViewModel
 
         val cardSliderViewPager = cardsBinding.root.findViewById(R.id.cardviewPager) as CardSliderViewPager
-        cardSliderViewPager.adapter = CardsActionAdapter(cards)
+        cardSliderViewPager.adapter = CardsActionAdapter(cards,requireContext())
 
         return cardsBinding.root
     }

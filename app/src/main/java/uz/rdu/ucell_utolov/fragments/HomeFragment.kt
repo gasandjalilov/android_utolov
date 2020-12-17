@@ -38,10 +38,12 @@ class HomeFragment : Fragment() {
             container,
             false
         )
+        val cardSliderViewPager = homeBinding.root.findViewById(R.id.viewPager) as CardSliderViewPager
+
+
         homeBinding.vmodel = homeViewModel
 
-        val cardSliderViewPager = homeBinding.root.findViewById(R.id.viewPager) as CardSliderViewPager
-        cardSliderViewPager.adapter = HomeCardsAdapter(cards)
+        cardSliderViewPager.adapter = HomeCardsAdapter(cards,requireContext())
         return homeBinding.root
     }
 

@@ -44,6 +44,7 @@ class CardConfigurationFragment : Fragment() {
         // Inflate the layout for this fragment
         var profileCard: ProfileResponse = args.cardObject
 
+
         cardConfigurationViewModel = CardConfigurationViewModel()
         cardConfigurationViewModel.card = profileCard
         cardsBinding = DataBindingUtil.inflate<FragmentCardConfigurationBinding>(
@@ -52,23 +53,32 @@ class CardConfigurationFragment : Fragment() {
             container,
             false
         )
+        cardsBinding.lifecycleOwner = this
+
+        if (profileCard.card_number.isNullOrEmpty()) {
+            cardsBinding.cardConfigButtonBlockcard.visibility = View.GONE
+            cardsBinding.cardConfigButtonDelete.visibility = View.GONE
+            cardsBinding.cardConfigButtonMakecrdmain.visibility = View.GONE
+            cardsBinding.cardConfigButtonCreate.visibility =View.VISIBLE
+        }
+        else{
+            cardsBinding.cardConfigButtonBlockcard.visibility = View.VISIBLE
+            cardsBinding.cardConfigButtonDelete.visibility = View.VISIBLE
+            cardsBinding.cardConfigButtonMakecrdmain.visibility = View.VISIBLE
+            cardsBinding.cardConfigButtonCreate.visibility =View.GONE
+        }
+
         var card = cardsBinding.include.findViewById(R.id.card_element_cardview) as CardView
         this.card_numer = cardsBinding.include.findViewById(R.id.card_element_number) as TextView
         this.card_exp = cardsBinding.include.findViewById(R.id.card_element_exp) as TextView
         this.card_name = cardsBinding.include.findViewById(R.id.card_element_card_name) as TextView
-
         cardConfigurationViewModel.cardView = card
 
         cardsBinding.cardAddCardnumber.addTextChangedListener(object : TextWatcher {
-
             private var current = ""
-
             private val nonDigits = Regex("[^\\d]")
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
             override fun afterTextChanged(s: Editable) {
                 if (s.toString() != current) {
                     val userInput = s.toString().replace(nonDigits, "")

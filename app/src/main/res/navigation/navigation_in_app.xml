@@ -57,6 +57,9 @@
         <argument
             android:name="card_object"
             app:argType="uz.rdu.ucell_utolov.models.profilemodels.ProfileResponse" />
+        <action
+            android:id="@+id/action_cardConfigurationFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 
 

@@ -36,6 +36,6 @@ interface ApplicationComponent {
     fun inject(registrationFragment: RegistrationFragment)
     fun inject(phonePinFragment: PhonePinFragment)
     fun inject(pinViewModel: PinViewModel)
-
+    fun inject(cardConfigurationViewModel: CardConfigurationViewModel)
 
 }

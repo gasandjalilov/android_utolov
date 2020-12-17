@@ -13,7 +13,10 @@ interface ProfileResponseDao {
     @Update
     fun updateCard(vararg card: ProfileResponse)
 
-    @Query("SELECT * FROM ProfileResponse WHERE card_name LIKE :cardnumber")
+    @Delete
+    fun deleteCard(vararg card: ProfileResponse)
+
+    @Query("SELECT * FROM ProfileResponse WHERE card_number LIKE :cardnumber")
     fun findByCardNumber(cardnumber: String): ProfileResponse
 
     @Query("SELECT * FROM ProfileResponse")

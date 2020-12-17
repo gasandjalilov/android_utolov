@@ -1,5 +1,6 @@
 package uz.rdu.ucell_utolov.helpers.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,12 +13,20 @@ import com.github.islamkhsh.CardSliderAdapter
 import uz.rdu.ucell_utolov.R
 import uz.rdu.ucell_utolov.fragments.HomeFragmentDirections
 import uz.rdu.ucell_utolov.fragments.PinFragmentDirections
+import uz.rdu.ucell_utolov.helpers.ApplicationDatabase
 import uz.rdu.ucell_utolov.models.profilemodels.ProfileResponse
 import kotlin.random.Random
 
-class HomeCardsAdapter(private val profiles: List<ProfileResponse>): CardSliderAdapter<HomeCardsAdapter.HomeViewHolder>()  {
+class HomeCardsAdapter(private val profiles: List<ProfileResponse>,context:Context): CardSliderAdapter<HomeCardsAdapter.HomeViewHolder>()  {
+
+
+
 
     var list = mutableListOf(R.drawable.card_gradient_1,R.drawable.card_gradient_2,R.drawable.card_gradient_3,R.drawable.card_gradient_4,R.drawable.card_gradient_5,R.drawable.card_gradient_6)
+    var db =
+        ApplicationDatabase.getAppDataBase(context)
+
+
 
     override fun bindVH(holder: HomeViewHolder, position: Int) {
         val profile = profiles[position]
@@ -54,7 +63,13 @@ class HomeCardsAdapter(private val profiles: List<ProfileResponse>): CardSliderA
             card_exp.text = profile.card_expire
             amount.text = profile.balance
             var rand = Random
-            card.setBackgroundResource(list[rand.nextInt(list.size)])
+            var dbCard = db?.profileResponseDao()?.findByCardNumber(profile.card_number)
+            if(dbCard?.card_color != null) {
+                card.setBackgroundResource(dbCard.card_color!!)
+            }
+            else {
+                card.setBackgroundResource(list[rand.nextInt(list.size)])
+            }
         }
     }
 

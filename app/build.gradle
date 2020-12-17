@@ -8,7 +8,6 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 android {
     compileSdkVersion 29
     buildToolsVersion '30.0.2'
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -89,10 +88,9 @@ dependencies {
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
     implementation 'com.github.IslamKhSh:CardSlider:1.0.1'
     implementation 'com.andrognito.pinlockview:pinlockview:2.1.0'
-    implementation 'com.github.GoodieBag:Pinview:v1.4'
     implementation "androidx.biometric:biometric:1.2.0-alpha01"
     implementation "androidx.security:security-crypto:1.0.0-alpha02"
-
+    implementation 'com.tbuonomo:morph-bottom-navigation:1.0.1'
     //LDAP
     implementation "com.unboundid:unboundid-ldapsdk:5.1.0"
     //Dagger2

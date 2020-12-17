@@ -13,7 +13,6 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.andrognito.pinlockview.PinLockListener
 import com.andrognito.pinlockview.PinLockView
-import com.goodiebag.pinview.Pinview
 import com.google.android.material.snackbar.Snackbar
 import uz.rdu.ucell_utolov.MainApplication
 import uz.rdu.ucell_utolov.R

@@ -70,13 +70,8 @@ class PinAuthFragment : Fragment() {
                 }
 
             }
-
-            override fun onEmpty() {
-            }
-
-            override fun onPinChange(pinLength: Int, intermediatePin: String?) {
-            }
-
+            override fun onEmpty() {}
+            override fun onPinChange(pinLength: Int, intermediatePin: String?) {}
         })
         authBinding.pinLockView.attachIndicatorDots(authBinding.indicatorDots)
         callBiometrics()

@@ -128,7 +128,7 @@
 
                                 <com.github.islamkhsh.CardSliderViewPager
                                     android:id="@+id/viewPager"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     app:auto_slide_time="6"
                                     app:cardSlider_baseShadow="8dp"
@@ -183,18 +183,18 @@
                         app:cardElevation="5dp"
                         app:cardUseCompatPadding="true">
 
-                        <com.santalu.maskara.widget.MaskEditText
-                            android:id="@+id/input"
+                        <br.com.sapereaude.maskedEditText.MaskedEditText
+                            android:id="@+id/input_for_pay"
                             style="@style/UtolovTextHome"
+                            android:onTextChanged="@{vmodel.onTextChanged}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginHorizontal="15dp"
                             android:background="@null"
-                            android:hint="+998 (__) ___ __ __"
                             android:inputType="number"
-                            app:mask="+998 (__) ___ __ __"
-                            app:maskCharacter="_"
+                            app:mask="+998 | ## ### ## ## "
+                            app:allowed_chars="1234567890"
                             app:maskStyle="persistent" />
 
                     </androidx.cardview.widget.CardView>

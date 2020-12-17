@@ -17,7 +17,6 @@ import androidx.navigation.findNavController
 import com.andrognito.pinlockview.IndicatorDots
 import com.andrognito.pinlockview.PinLockListener
 import com.andrognito.pinlockview.PinLockView
-import com.goodiebag.pinview.Pinview
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_transfer.view.*
 import uz.rdu.ucell_utolov.MainApplication
