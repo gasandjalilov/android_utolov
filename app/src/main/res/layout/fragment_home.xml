@@ -10,31 +10,43 @@
         <variable
             name="vmodel"
             type="uz.rdu.ucell_utolov.modelviews.HomeViewModel" />
+
+        <variable
+            name="mvmodel"
+            type="uz.rdu.ucell_utolov.modelviews.MainViewModel" />
     </data>
 
 
-    <LinearLayout
+    <com.google.android.material.circularreveal.CircularRevealLinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        android:background="#EAEAEA"
+        android:background="@color/mainBackGround"
         android:orientation="vertical"
         tools:context=".fragments.HomeFragment">
 
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:refreshing="@{mvmodel.loading}"
+            app:onRefreshListener="@{() -> vmodel.onRefresh()}">
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
             android:gravity="center">
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="100dp"
                 android:orientation="vertical">
+
+
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="390dp"
+                    android:layout_height="250dp"
                     android:background="#EAEAEA">
 
 
@@ -42,13 +54,12 @@
                         android:id="@+id/fragment_home_cardview_balances"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:backgroundTint="#EAEAEA"
-
+                        android:backgroundTint="@color/mainBackGround"
                         >
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="280dp"
+                            android:layout_height="180dp"
                             android:background="@drawable/ic_background_home">
 
                             <androidx.cardview.widget.CardView
@@ -80,15 +91,17 @@
                                         app:layout_constraintTop_toTopOf="parent"
                                         app:layout_constraintVertical_bias="0.09" />
 
+
                                     <TextView
                                         android:id="@+id/textView4"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="50dp"
+                                        android:drawablePadding="20dp"
                                         android:shadowColor="@color/text_shadow"
                                         android:shadowDx="1"
                                         android:shadowDy="1"
                                         android:shadowRadius="2"
-                                        android:text="@={vmodel.homeView.amount}"
+                                        android:text="@={vmodel.observable_amount}"
                                         android:textAlignment="textStart"
                                         android:textColor="@color/whiteText"
                                         android:textSize="32sp"
@@ -98,19 +111,22 @@
                                         app:layout_constraintHorizontal_bias="0.08"
                                         app:layout_constraintStart_toStartOf="parent"
                                         app:layout_constraintTop_toBottomOf="@+id/textView3"
-                                        app:layout_constraintVertical_bias="0.0" />
+                                        app:layout_constraintVertical_bias="0.0"></TextView>
 
                                     <ImageButton
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="50dp"
                                         android:background="@android:color/transparent"
+                                        android:onClick="@{(view) -> vmodel.hideAmount(view)}"
                                         android:src="@drawable/ic_baseline_remove_red_eye_24"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         app:layout_constraintEnd_toEndOf="parent"
-                                        app:layout_constraintHorizontal_bias="0.045"
-                                        app:layout_constraintStart_toEndOf="@+id/textView4"
+                                        app:layout_constraintHorizontal_bias="0.891"
+                                        app:layout_constraintStart_toStartOf="parent"
                                         app:layout_constraintTop_toTopOf="parent"
-                                        app:layout_constraintVertical_bias="0.304" />
+                                        app:layout_constraintVertical_bias="0.376" />
+
+
                                 </androidx.constraintlayout.widget.ConstraintLayout>
                             </androidx.cardview.widget.CardView>
 
@@ -119,46 +135,43 @@
 
                         <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_above="@+id/fragment_home_cardview_balances">
+                            android:layout_height="240dp"
+                            android:layout_above="@+id/fragment_home_cardview_balances"
+                            android:layout_gravity="top">
 
-                            <androidx.constraintlayout.widget.ConstraintLayout
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                                android:layout_height="match_parent"
+                                android:gravity="bottom"
+                                android:orientation="vertical"
+                                tools:layout_editor_absoluteX="0dp"
+                                tools:layout_editor_absoluteY="1dp">
 
                                 <com.github.islamkhsh.CardSliderViewPager
                                     android:id="@+id/viewPager"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    app:auto_slide_time="6"
-                                    app:cardSlider_baseShadow="8dp"
-                                    app:cardSlider_indicator="@id/indicator"
-                                    app:cardSlider_otherPagesWidth="24dp"
-                                    app:cardSlider_pageMargin="12dp"
-                                    app:cardSlider_smallScaleFactor="0.8"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintVertical_bias="0.666" />
+                                    android:layout_marginTop="24dp"
+                                    app:auto_slide_time="3"
+                                    app:cardSlider_otherPagesWidth="48dp"
+                                    app:cardSlider_smallScaleFactor="0.9" />
 
                                 <com.github.islamkhsh.CardSliderIndicator
                                     android:id="@+id/indicator"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
                                     app:indicatorsToShow="3"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@+id/viewPager" />
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-
+                            </LinearLayout>
                         </FrameLayout>
                     </androidx.cardview.widget.CardView>
 
 
                 </FrameLayout>
-
                 <TextView
                     style="@style/UtolovTextHome"
                     android:layout_width="match_parent"
@@ -179,24 +192,40 @@
                         android:layout_height="80dp"
                         android:layout_gravity="center"
                         android:layout_weight="0.35"
+                        android:backgroundTint="@color/whiteBackground"
                         app:cardCornerRadius="10dp"
-                        app:cardElevation="5dp"
+                        app:cardElevation="0dp"
                         app:cardUseCompatPadding="true">
 
-                        <br.com.sapereaude.maskedEditText.MaskedEditText
-                            android:id="@+id/input_for_pay"
-                            style="@style/UtolovTextHome"
-                            android:onTextChanged="@{vmodel.onTextChanged}"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginHorizontal="15dp"
-                            android:background="@null"
-                            android:inputType="number"
-                            app:mask="+998 | ## ### ## ## "
-                            app:allowed_chars="1234567890"
-                            app:maskStyle="persistent" />
+                            android:layout_height="match_parent">
 
+                            <br.com.sapereaude.maskedEditText.MaskedEditText
+                                android:id="@+id/input_for_pay"
+                                style="@style/UtolovTextHome"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginHorizontal="15dp"
+                                android:layout_weight="0.8"
+                                android:background="@null"
+                                android:inputType="number"
+                                android:onTextChanged="@{(text, start, before, count) -> vmodel.mobileCarrierNumber(text)}"
+                                app:allowed_chars="1234567890"
+                                app:mask="+998 | ## ### ## ## "
+                                app:maskStyle="persistent" />
+
+                            <Button
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.19"
+                                android:background="@android:color/transparent"
+                                android:drawableLeft="@drawable/ic_payment"
+                                android:drawableTint="@color/colorPrimary"
+                                android:onClick="@{(view) -> vmodel.moveToPayment(view)}" />
+
+                        </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
 
@@ -219,9 +248,11 @@
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="70dp"
                         android:layout_weight="0.50"
                         app:cardCornerRadius="10dp"
+                        android:backgroundTint="@color/whiteBackground"
+                        app:cardElevation="0dp"
                         app:cardUseCompatPadding="true">
 
 
@@ -244,9 +275,11 @@
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="70dp"
                         android:layout_weight="0.50"
                         app:cardCornerRadius="10dp"
+                        android:backgroundTint="@color/whiteBackground"
+                        app:cardElevation="0dp"
                         app:cardUseCompatPadding="true">
 
                         <com.google.android.material.button.MaterialButton
@@ -262,6 +295,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/home_text_history"
                     style="@style/UtolovTextHome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -271,9 +305,11 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/home_merchants"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="80dp"
                     android:layout_centerVertical="true"
+                    android:layout_gravity="center"
                     android:orientation="horizontal"
+                    android:textAlignment="center"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 <TextView
@@ -286,14 +322,16 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/transactions"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="match_parent"
                     android:layout_centerVertical="true"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
             </LinearLayout>
 
         </ScrollView>
-    </LinearLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 
 
 </layout>

@@ -40,7 +40,8 @@ interface ApiAuthInterface {
 
     companion object Factory{
         fun create(): ApiAuthInterface {
-            val client = OkHttpClient.Builder()
+            val client = OkHttpClient
+                .Builder()
                 .callTimeout(2, TimeUnit.MINUTES)
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)

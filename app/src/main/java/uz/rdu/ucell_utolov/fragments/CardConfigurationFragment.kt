@@ -16,20 +16,23 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import uz.rdu.ucell_utolov.R
 import uz.rdu.ucell_utolov.databinding.FragmentCardConfigurationBinding
-import uz.rdu.ucell_utolov.helpers.CardExpTextWatcher
 import uz.rdu.ucell_utolov.helpers.CardNumberTextWatcher
 import uz.rdu.ucell_utolov.models.AdvUser
 import uz.rdu.ucell_utolov.models.profilemodels.ProfileResponse
 import uz.rdu.ucell_utolov.modelviews.CardActionViewModel
 import uz.rdu.ucell_utolov.modelviews.CardConfigurationViewModel
+import uz.rdu.ucell_utolov.modelviews.MainViewModel
+import kotlin.math.log
 
 
 class CardConfigurationFragment : Fragment() {
 
     private val args: CardConfigurationFragmentArgs by navArgs()
+    private val model: MainViewModel by activityViewModels()
     lateinit var cardConfigurationViewModel: CardConfigurationViewModel
     lateinit var card_numer: TextView
     lateinit var card_exp: TextView
@@ -43,9 +46,10 @@ class CardConfigurationFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         var profileCard: ProfileResponse = args.cardObject
+        Log.i("Card:",profileCard.toString())
 
-
-        cardConfigurationViewModel = CardConfigurationViewModel()
+        cardConfigurationViewModel = CardConfigurationViewModel(requireActivity())
+        cardConfigurationViewModel.mainViewModel = model
         cardConfigurationViewModel.card = profileCard
         cardsBinding = DataBindingUtil.inflate<FragmentCardConfigurationBinding>(
             inflater,
@@ -54,20 +58,30 @@ class CardConfigurationFragment : Fragment() {
             false
         )
         cardsBinding.lifecycleOwner = this
-
+        cardConfigurationViewModel.progressBar = cardsBinding.cardConfigProgressBar
         if (profileCard.card_number.isNullOrEmpty()) {
             cardsBinding.cardConfigButtonBlockcard.visibility = View.GONE
             cardsBinding.cardConfigButtonDelete.visibility = View.GONE
             cardsBinding.cardConfigButtonMakecrdmain.visibility = View.GONE
+            cardsBinding.cardConfigButtonRefresh.visibility = View.GONE
             cardsBinding.cardConfigButtonCreate.visibility =View.VISIBLE
         }
         else{
+            cardsBinding.cardAddCardnumber.isEnabled = false
+            cardsBinding.cardAddExp.isEnabled = false
+            cardConfigurationViewModel.cardnumber.set(profileCard.card_number)
+            cardConfigurationViewModel.cardexp.set(profileCard.card_expire)
+            cardConfigurationViewModel.cardname.set(profileCard.card_name)
+
+            cardsBinding.cardAddCardnumber.setText(profileCard.card_number)
+            cardsBinding.cardAddExp.setText(profileCard.card_expire)
             cardsBinding.cardConfigButtonBlockcard.visibility = View.VISIBLE
             cardsBinding.cardConfigButtonDelete.visibility = View.VISIBLE
             cardsBinding.cardConfigButtonMakecrdmain.visibility = View.VISIBLE
             cardsBinding.cardConfigButtonCreate.visibility =View.GONE
-        }
+            cardsBinding.cardConfigButtonRefresh.visibility = View.VISIBLE
 
+        }
         var card = cardsBinding.include.findViewById(R.id.card_element_cardview) as CardView
         this.card_numer = cardsBinding.include.findViewById(R.id.card_element_number) as TextView
         this.card_exp = cardsBinding.include.findViewById(R.id.card_element_exp) as TextView

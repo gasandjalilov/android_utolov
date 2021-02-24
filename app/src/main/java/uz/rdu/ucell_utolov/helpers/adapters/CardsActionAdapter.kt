@@ -10,6 +10,7 @@ import androidx.cardview.widget.CardView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.github.islamkhsh.CardSliderAdapter
+import org.w3c.dom.Text
 import uz.rdu.ucell_utolov.R
 import uz.rdu.ucell_utolov.fragments.CardActionFragmentDirections
 import uz.rdu.ucell_utolov.fragments.HomeFragmentDirections
@@ -30,9 +31,10 @@ class CardsActionAdapter(private val profiles: List<ProfileResponse>,context: Co
         var card_exp = holder.itemView.findViewById<TextView>(R.id.card_element_exp) as TextView
         var amount = holder.itemView.findViewById<TextView>(R.id.card_element_amount) as TextView
         var card = holder.itemView.findViewById<CardView>(R.id.card_element_cardview) as CardView
+        var hiddencard = holder.itemView.findViewById<TextView>(R.id.card_element_hiden) as TextView
         var cardnum:String?
-        if(profile.card_number!!.length>2) {
-            cardnum = profile.card_number?.replaceRange(4, 12, " **** **** ")
+        if(profile.card_number.length>2) {
+            cardnum = profile.card_number.replaceRange(4, 12, " **** **** ")
         }
         else {
             cardnum = profile.card_number
@@ -48,13 +50,15 @@ class CardsActionAdapter(private val profiles: List<ProfileResponse>,context: Co
             amount.visibility=View.GONE
             button.setOnClickListener{
                 val action = CardActionFragmentDirections.actionCardActionFragmentToCardConfigurationFragment(profile)
-                it.findNavController()?.navigate(action)
+                it.findNavController().navigate(action)
             }
         }
         else {
+            var card_amount = profile.balance?.toDouble()
             elementNumber.text = cardnum
-            card_exp.text = profile.card_expire
-            amount.text = profile.balance
+            hiddencard.text= profile.card_number
+            card_exp.text = profile.card_expire?.addCharAtIndex('/',2)
+            amount.text = String.format("%,d", card_amount?.toLong())
             var rand = Random
             card.setBackgroundResource(list[rand.nextInt(list.size)])
             var dbCard = db?.profileResponseDao()?.findByCardNumber(profile.card_number)
@@ -66,7 +70,7 @@ class CardsActionAdapter(private val profiles: List<ProfileResponse>,context: Co
             }
             card.setOnClickListener{
                 val action = CardActionFragmentDirections.actionCardActionFragmentToCardConfigurationFragment(profile)
-                it.findNavController()?.navigate(action)
+                it.findNavController().navigate(action)
             }
         }
     }
@@ -75,14 +79,18 @@ class CardsActionAdapter(private val profiles: List<ProfileResponse>,context: Co
         return profiles.size
     }
 
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardsViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.card_element, parent, false)
-
         return CardsViewHolder(view)
     }
 
 
     class CardsViewHolder(view: View) : RecyclerView.ViewHolder(view)
+
+    fun String.addCharAtIndex(char: Char, index: Int) =
+        StringBuilder(this).apply { insert(index, char) }.toString()
 
 }

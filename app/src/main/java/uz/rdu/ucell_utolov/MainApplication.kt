@@ -67,18 +67,18 @@ class MainApplication:Application() {
 
     @TargetApi(Build.VERSION_CODES.N_MR1)
     private fun updateResourcesLocale(context:Context, locale:Locale) :Context{
-        var configuration = context.getResources().getConfiguration()
-        configuration.setLocale(locale);
-        return context.createConfigurationContext(configuration);
+        var configuration = context.resources.configuration
+        configuration.setLocale(locale)
+        return context.createConfigurationContext(configuration)
     }
 
     @SuppressWarnings("deprecation")
     private fun updateResourcesLocaleLegacy(context:Context, locale:Locale):Context {
-        var resources = context.getResources();
-        var configuration = resources.getConfiguration();
-        configuration.locale = locale;
-        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
-        return context;
+        var resources = context.resources
+        var configuration = resources.configuration
+        configuration.locale = locale
+        resources.updateConfiguration(configuration, resources.displayMetrics)
+        return context
     }
 
 }

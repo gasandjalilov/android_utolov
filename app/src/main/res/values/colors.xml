@@ -4,11 +4,13 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#642887</color>
     <color name="whiteText">#FFFFFF</color>
+    <color name="whiteBackground">#FFFFFF</color>
     <color name="colorAccentUcell">#00a597</color>
     <color name="colorTextHome">#A1A1A1</color>
     <color name="colorPrimaryAlpha">#CC642887</color>
-    <color name="yellow">#FFF300</color>
-    <color name="menuBackGround">#D8D8D8</color>
-    <color name="mainBackGround">#E5E5E5</color>
+    <color name="menuBackGround">#F0F0F0</color>
+    <color name="mainBackGround">#F0F0F0</color>
     <color name="text_shadow">#7F000000</color>
+    <color name="purpleBackground">#642887</color>
+    <color name="purpleBackgroundSecond">#5B1981</color>
 </resources>

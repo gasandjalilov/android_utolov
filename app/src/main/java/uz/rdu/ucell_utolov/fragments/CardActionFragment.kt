@@ -7,7 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.github.islamkhsh.CardSliderViewPager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import uz.rdu.ucell_utolov.R
 import uz.rdu.ucell_utolov.databinding.FragmentCardActionBinding
 import uz.rdu.ucell_utolov.helpers.adapters.CardsActionAdapter
@@ -22,7 +26,7 @@ class CardActionFragment : Fragment() {
     private val model: MainViewModel by activityViewModels()
 
     lateinit var cardActionViewModel: CardActionViewModel
-
+    lateinit var cards: MutableList<ProfileResponse>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,21 +34,22 @@ class CardActionFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 
-        var cards = model.getAsyncProfile()
-        if(cards.size==0){
-            cards.add(ProfileResponse())
-        }
         cardActionViewModel = CardActionViewModel()
-        var cardsBinding: FragmentCardActionBinding = DataBindingUtil.inflate<FragmentCardActionBinding>(
-            inflater,
-            R.layout.fragment_card_action,
-            container,
-            false
-        )
+        var cardsBinding: FragmentCardActionBinding =
+            DataBindingUtil.inflate<FragmentCardActionBinding>(
+                inflater,
+                R.layout.fragment_card_action,
+                container,
+                false
+            )
         cardsBinding.vmodel = cardActionViewModel
-
-        val cardSliderViewPager = cardsBinding.root.findViewById(R.id.cardviewPager) as CardSliderViewPager
-        cardSliderViewPager.adapter = CardsActionAdapter(cards,requireContext())
+        model.cardListLive.observe(viewLifecycleOwner, Observer {
+            cards = it.toMutableList()
+            cards.add(ProfileResponse())
+            val cardSliderViewPager =
+                cardsBinding.root.findViewById(R.id.cardviewPager) as CardSliderViewPager
+            cardSliderViewPager.adapter = CardsActionAdapter(cards, requireContext())
+        })
 
         return cardsBinding.root
     }

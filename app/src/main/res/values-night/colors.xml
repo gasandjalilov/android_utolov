@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#642887</color>
+    <color name="whiteText">#FFFFFF</color>
+    <color name="whiteBackground">#292D3A</color>
+    <color name="colorAccentUcell">#00a597</color>
+    <color name="colorTextHome">#A1A1A1</color>
+    <color name="colorPrimaryAlpha">#CC292D3A</color>
+    <color name="menuBackGround">#F0F0F0</color>
+    <color name="mainBackGround">#1E2026</color>
+    <color name="text_shadow">#7F000000</color>
+    <color name="purpleBackground">#292D3A</color>
+    <color name="purpleBackgroundSecond">#1C1E27</color>
+
+</resources>

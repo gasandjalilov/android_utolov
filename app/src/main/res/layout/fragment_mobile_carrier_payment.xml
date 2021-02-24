@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vmodel"
+            type="uz.rdu.ucell_utolov.modelviews.MobileCarrierPaymentViewModel" />
+
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/mainBackGround">
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/UtolovTextHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/carrier_main"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.047"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.023" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintVertical_bias="0.060000002">
+
+
+            <TextView
+                android:paddingLeft="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/carrier_main_number"
+                style="@style/UtolovTextHome"
+
+                />
+
+            <EditText
+                android:id="@+id/mobile_carrier_number"
+                style="@style/UtolovTextHome"
+                android:text="@={vmodel.number}"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/textedit_rounded"
+                android:maxLength="12"
+                android:paddingLeft="15dp"
+                app:allowed_chars="1234567890" />
+
+            <TextView
+                android:paddingLeft="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/carrier_main_amount"
+                style="@style/UtolovTextHome"
+
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:maxLength="19"
+                android:paddingLeft="15dp"
+                android:text="@={vmodel.amount}"
+
+                android:background="@drawable/textedit_rounded"
+                app:mask="# ### ### ###"
+                style="@style/UtolovTextHome"
+                app:allowed_chars="1234567890"
+                />
+
+            <com.github.islamkhsh.CardSliderViewPager
+                android:id="@+id/viewPager"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:cardSlider_baseShadow="8dp"
+                app:cardSlider_indicator="@id/indicator"
+                app:cardSlider_otherPagesWidth="24dp"
+                app:cardSlider_pageMargin="12dp"
+                app:cardSlider_smallScaleFactor="0.9"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.666" />
+
+            <com.github.islamkhsh.CardSliderIndicator
+                android:id="@+id/indicator"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:indicatorsToShow="3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewPager"
+                android:padding="10dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/textedit_rounded"
+                android:textColor="@color/colorPrimary"
+                app:backgroundTint="@color/whiteText"
+                app:icon="@drawable/ic_payment"
+                android:onClick="@{(view) -> vmodel.makePayment(view)}"
+                android:text="@string/carrier_main_pay"
+                app:iconGravity="textStart"
+                app:iconTint="@color/colorPrimary"
+                android:gravity="center"/>
+        </LinearLayout>
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

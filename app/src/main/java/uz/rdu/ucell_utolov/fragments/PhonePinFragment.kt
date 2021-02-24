@@ -90,9 +90,9 @@ class PhonePinFragment : Fragment() {
                         Log.d("PIN CHANGED",response.toString())
                         var user = User(username,registrationViewModel.password.get())
 
-                        var adbUser = applicationModule.login(user).execute().body()
+                        var adbUser = SharedPrefHelper(requireContext()).getUserObject()
+                            //applicationModule.login(user).execute().body()
 
-                        prefuser.setUser(user)
                         prefuser.saveUserObject(adbUser)
                         Log.d("User",adbUser.toString())
 

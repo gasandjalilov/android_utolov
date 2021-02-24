@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="corner_radius_bottom_navigation_view">10dp</dimen>
+
+
+
+</resources>

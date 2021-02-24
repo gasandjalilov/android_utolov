@@ -84,7 +84,9 @@
                     app:dotDiameter="12dp"
                     app:keypadButtonSize="72dp"
                     app:keypadHorizontalSpacing="30dp"
-                    app:keypadShowDeleteButton="false"
+                    app:keypadShowDeleteButton="true"
+                    app:keypadDeleteButtonDrawable="@drawable/ic_baseline_backspace_24"
+                    app:keypadDeleteButtonPressedColor="#C8C8C8"
                     app:keypadTextColor="@color/whiteText"
                     app:keypadTextSize="24dp"
                     app:keypadVerticalSpacing="18dp"
@@ -94,7 +96,20 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/indicator_dots"
                     app:layout_constraintVertical_bias="0.291"
+
                     app:pinLength="5" />
+
+                <ProgressBar
+                    android:id="@+id/progressBarPinAuth"
+                    android:visibility="invisible"
+                    style="?android:attr/progressBarStyle"
+                    android:indeterminateTint="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

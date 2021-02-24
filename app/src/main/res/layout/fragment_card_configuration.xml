@@ -26,9 +26,11 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
                 <ProgressBar
+                    android:id="@+id/card_config_progress_bar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -169,6 +171,7 @@
                 android:id="@+id/linearLayoutCompat2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="100dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -213,12 +216,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_margin="15dp"
-                    android:background="@drawable/textedit_rounded"
+                    android:backgroundTint="@color/whiteBackground"
                     android:gravity="center"
                     android:paddingLeft="15dp"
                     android:text="@string/card_config_card_makemain"
                     android:textColor="@color/colorPrimary"
-                    app:backgroundTint="@color/whiteText"
                     app:icon="@drawable/ic_vector_star"
                     app:iconGravity="textStart"
                     app:iconTint="@color/colorPrimary" />
@@ -228,7 +230,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_margin="15dp"
-                    android:background="@drawable/textedit_rounded"
+                    android:backgroundTint="@color/whiteBackground"
                     android:gravity="center"
                     android:paddingLeft="15dp"
                     android:text="@string/card_config_card_block"
@@ -243,7 +245,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_margin="15dp"
-                    android:background="@drawable/textedit_rounded"
+                    android:backgroundTint="@color/whiteBackground"
                     android:gravity="center"
                     android:onClick="@{(view) -> vmodel.delete(view)}"
                     android:paddingLeft="15dp"
@@ -260,11 +262,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_margin="15dp"
-                    android:background="@drawable/textedit_rounded"
+                    android:backgroundTint="@color/whiteBackground"
                     android:gravity="center"
                     android:onClick="@{(view) -> vmodel.save(view)}"
                     android:paddingLeft="15dp"
                     android:text="@string/card_config_card_create"
+                    android:textColor="@color/colorPrimary"
+                    app:backgroundTint="@color/whiteText"
+                    app:icon="@drawable/ic_baseline_credit_card_24"
+                    app:iconGravity="textStart"
+                    app:iconTint="@color/colorPrimary" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/card_config_button_refresh"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="15dp"
+                    android:backgroundTint="@color/whiteBackground"
+                    android:gravity="center"
+                    android:onClick="@{(view) -> vmodel.update(view)}"
+                    android:paddingLeft="15dp"
+                    android:text="@string/card_config_card_update"
                     android:textColor="@color/colorPrimary"
                     app:backgroundTint="@color/whiteText"
                     app:icon="@drawable/ic_baseline_credit_card_24"

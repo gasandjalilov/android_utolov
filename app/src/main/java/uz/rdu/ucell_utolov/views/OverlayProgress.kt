@@ -11,6 +11,6 @@ class OverlayProgress(context: Context?, attrs: AttributeSet?) : FrameLayout(con
       init {
         setBackgroundColor(color.colorPrimary)
         alpha = 0.6f
-        setOnTouchListener({ v, event -> true })
-    }
+        setOnTouchListener { v, event -> true }
+      }
 }

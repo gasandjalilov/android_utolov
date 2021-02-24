@@ -46,30 +46,18 @@ class RegistrationViewModel:RegistrationInterface, ViewModel() {
         //val action = RegistrationFragmentDirections.actionRegistrationFragmentToLoginFragment()
         //v.findNavController().navigate(action)
         MainApplication.component.inject(this)
-        Log.d("login",number.get().toString() + "   "+ password.get())
-        var user = User(number.get().toString().replace("[^0-9]".toRegex(), ""),password.get().toString())
-        var advuser: AdvUser? =null
-        try {
-            advuser = applicationModule.login(user).execute().body()!!
-
+        var regex = Regex("[^0-9]")
+        var tempUser = User(regex.replace(number.get().toString(),""),password.get())
+        var registrationaction = applicationModule.login(tempUser).execute()
+        if(!registrationaction.isSuccessful) {
+            Snackbar.make(v,"Try again later",Snackbar.LENGTH_LONG)
         }
-        catch (e: Exception){
-            val snackbar1 =
-                Snackbar.make(v, "USER DOESN'T EXIST", Snackbar.LENGTH_LONG)
-            snackbar1.show()
-        }
-        if(advuser !=null && advuser.status=="ACTIVE"){
-            Log.d("USER: User found",advuser!!.toString())
-            SharedPrefHelper(v.context).setUser(user)
-            ApplicationDatabase.getAppDataBase(context!!)?.advUserDao()?.insertUser(advuser)
-            var fragmentDirection = RegistrationFragmentDirections.actionRegistrationFragmentToMainFragment(advuser)
+        else {
+            Log.d("registration", registrationaction.body().toString())
+            SharedPrefHelper(v.context).saveUserObject(registrationaction.body()!!)
+            var fragmentDirection =
+                RegistrationFragmentDirections.actionRegistrationFragmentToPinFragment()
             v.findNavController().navigate(fragmentDirection)
-        }
-        else
-        {
-            val snackbar1 =
-                Snackbar.make(v, "USER DOESN'T EXIST", Snackbar.LENGTH_LONG)
-            snackbar1.show()
         }
 
         //_navigateScreen.value = Event(R.id.action_registrationFragment_to_loginFragment)
@@ -85,11 +73,8 @@ class RegistrationViewModel:RegistrationInterface, ViewModel() {
             Snackbar.make(v,"Try again later",Snackbar.LENGTH_LONG)
         }
         else {
-            var db =
-                ApplicationDatabase.getAppDataBase(context)
             Log.d("registration", registrationaction.body().toString())
-            db?.advUserDao()?.insertUser(registrationaction.body()!!)
-            SharedPrefHelper(v.context).setUser(User(user.username,user.password))
+            SharedPrefHelper(v.context).saveUserObject(registrationaction.body()!!)
             var fragmentDirection =
                 RegistrationFragmentDirections.actionRegistrationFragmentToPinFragment()
             v.findNavController().navigate(fragmentDirection)

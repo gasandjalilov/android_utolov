@@ -1,11 +1,17 @@
 package uz.rdu.ucell_utolov.fragments
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.biometric.BiometricPrompt
@@ -14,6 +20,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.andrognito.pinlockview.PinLockListener
+import kotlinx.android.synthetic.main.fragment_pin_auth.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import uz.rdu.ucell_utolov.R
 import uz.rdu.ucell_utolov.databinding.FragmentPhonePinBinding
 import uz.rdu.ucell_utolov.databinding.FragmentPinAuthBinding
@@ -31,6 +40,7 @@ class PinAuthFragment : Fragment() {
     lateinit var pinAuthViewModel: PinAuthViewModel
     private lateinit var navController: NavController
     lateinit var user:AdvUser
+    lateinit var pinProgress:ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +55,7 @@ class PinAuthFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        //pinProgress = requireView().findViewById(R.id.progressBarPinAuth)
 
         pinAuthViewModel = PinAuthViewModel()
         var authBinding: FragmentPinAuthBinding =
@@ -55,18 +65,32 @@ class PinAuthFragment : Fragment() {
                 container,
                 false
             )
+        pinProgress = authBinding.progressBarPinAuth
         authBinding.vmodel = pinAuthViewModel
         var prefuser = SharedPrefHelper(requireContext())
         user = prefuser.getUserObject()!!
         authBinding.pinLockView.setPinLockListener(object : PinLockListener {
             override fun onComplete(pin: String?) {
-                Log.d("Pin",pin + "   " +user?.pin)
+                Log.d("Pin",pin + "   " + user.pin)
                 if(prefuser.validatePin(pin!!)){
-                    var fragmentDirection = PinAuthFragmentDirections.actionPinAuthFragmentToMainFragment(user)
-                    view!!.findNavController().navigate(fragmentDirection)
+                    pinProgress.visibility = View.VISIBLE
+                    GlobalScope.launch {
+                        var fragmentDirection = PinAuthFragmentDirections.actionPinAuthFragmentToMainFragment(user)
+                        view!!.findNavController().navigate(fragmentDirection)
+                    }
+                    pinProgress.visibility = View.GONE
+
                 }
                 else{
-                    authBinding.PinText.setText(resources.getText(R.string.pin_enter_wrong))
+                    authBinding.PinText.text = resources.getText(R.string.pin_enter_wrong)
+                    authBinding.pinLockView.resetPinLockView()
+                    val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                    if (Build.VERSION.SDK_INT >= 26) {
+                        vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.EFFECT_HEAVY_CLICK))
+                    } else {
+                        vibrator.vibrate(200)
+                    }
+
                 }
 
             }
@@ -80,15 +104,17 @@ class PinAuthFragment : Fragment() {
 
 
     fun callBiometrics(){
+        //pinProgress.visibility = View.VISIBLE
         val executor = ContextCompat.getMainExecutor(requireContext())
         var biopromt = BiometricPrompt(this,executor, object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                var fragmentDirection = PinAuthFragmentDirections.actionPinAuthFragmentToMainFragment(user)
-                view!!.findNavController().navigate(fragmentDirection)
-            }
+                pinProgress.visibility = View.VISIBLE
+                GlobalScope.launch {
+                    var fragmentDirection = PinAuthFragmentDirections.actionPinAuthFragmentToMainFragment(user)
+                    view!!.findNavController().navigate(fragmentDirection)
+                }
+                pinProgress.visibility = View.GONE
 
-            override fun onAuthenticationFailed() {
-                super.onAuthenticationFailed()
             }
 
         })

@@ -12,7 +12,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@color/whiteText"
+        android:background="@color/mainBackGround"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -119,6 +119,7 @@
         <EditText
             android:id="@+id/registration_password"
             android:visibility="gone"
+            android:hint="@string/password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_corners"
@@ -138,6 +139,7 @@
 
         <EditText
             android:id="@+id/registration_firstname"
+            android:hint="John"
             android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -159,7 +161,7 @@
         <EditText
             android:id="@+id/registration_lastname"
             android:visibility="gone"
-
+            android:hint="Doe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_corners"

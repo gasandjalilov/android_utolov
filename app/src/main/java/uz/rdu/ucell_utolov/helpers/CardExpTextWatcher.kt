@@ -4,7 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 
 
-class CardExpTextWatcher():TextWatcher {
+class lfCardExpTextWatcher :TextWatcher {
 
     private var lock = false
 

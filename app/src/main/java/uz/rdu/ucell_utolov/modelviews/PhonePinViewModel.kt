@@ -24,7 +24,7 @@ import java.lang.Exception
 import javax.inject.Inject
 
 
-class PhonePinViewModel():ViewModel(),LoginViewInterface {
+class PhonePinViewModel :ViewModel(),LoginViewInterface {
 
     var user: User = User()
     var isAnimation = ObservableBoolean(true)
@@ -42,25 +42,11 @@ class PhonePinViewModel():ViewModel(),LoginViewInterface {
     override fun login(view: View) {
         MainApplication.component.inject(this)
         progressVisible.set(true)
-        if(user.username.isNullOrEmpty() && user.password.isNullOrEmpty()){
-            this.user =  SharedPrefHelper(view.context).getUser()
-        }
-        var advuser: AdvUser? =null
-        try {
-            advuser = applicationModule.login(user).execute().body()!!
-
-        }
-        catch (e: Exception){
-            val snackbar1 =
-                Snackbar.make(view, "USER DOESN'T EXIST", Snackbar.LENGTH_LONG)
-            snackbar1.show()
-        }
-        if(advuser !=null && advuser.status=="ACTIVE"){
+        var advuser = SharedPrefHelper(view.context).getUserObject()
+        if(advuser !=null){
             progressVisible.set(false)
-            Log.d("USER: User found",advuser!!.toString())
+            Log.d("USER: User found", advuser.toString())
             progressVisible.set(false)
-            SharedPrefHelper(view.context).setUser(user)
-            ApplicationDatabase.getAppDataBase(context!!)?.advUserDao()?.insertUser(advuser)
         }
         else
         {

@@ -1,11 +1,11 @@
 package uz.rdu.ucell_utolov.helpers
 
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 
 
-class CardNumberTextWatcher():TextWatcher {
-
+class CardNumberTextWatcher :TextWatcher {
 
     private var lock = false
 

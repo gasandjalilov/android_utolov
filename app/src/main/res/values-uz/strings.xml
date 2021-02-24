@@ -2,16 +2,13 @@
 <resources>
     <string name="app_name">Ucell U-tolov</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lang" translatable="false">Til</string>
 
 
-    <string name="username">Login</string>
     <string name="password">Parol</string>
     <string name="login_button">Kirish</string>
     <string name="registration">Registaciya kilish</string>
     <string name="activation_info">Код Активации будет отправлен в SMS сообщении. Убедитесь что ваше устройство может принимать их</string>
-    <string name="registration_button_login">Логин</string>
-    <string name="registration_button_registration">Регистрация</string>
 
     <!--pin-->
     <string name="pin_enter_pin">Введите OTP</string>
@@ -28,20 +25,20 @@
     <string name="transfer_navbar_bottom">Transfares</string>
     <string name="payment_navbar_bottom">Payments</string>
     <string name="configuration_navbar_bottom">Configurations</string>
-    <string name="menu_navbar_bottom">Menu</string>
 
 
     <!--home-->
     <string name="home_balance">Obshiy balanciz</string>
-    <string name="home_balance_hide">Hide balance</string>
-    <string name="home_qr">QR Tulash</string>
-    <string name="home_u_point">U-Ballar</string>
+    <string name="home_u_point">Bonuslar</string>
     <string name="home_cards">Mening Kartalar</string>
     <string name="home_support">Qo\'llab-quvvatlash xizmati</string>
     <string name="home_pay_mobile">Оплата сотовой связи</string>
     <string name="home_request_pay">Запрос средств</string>
     <string name="home_pay_request">Перевод средств</string>
     <string name="home_last_transactions">Недавние транзакции</string>
+    <string name="home_balance_mobile">Мобильный баланс</string>
+    <string name="home_history_account">Account</string>
+    <string name="home_history_amount">Amount</string>
 
 
     <!--card-->
@@ -51,7 +48,6 @@
     <string name="card_all">All</string>
     <string name="card_uzcard">Uzcard</string>
     <string name="card_humo">Humo</string>
-    <string name="card_configure">Настройки карты</string>
 
     <!--card configuration-->
     <string name="card_config_title">Configure Card</string>
@@ -60,6 +56,38 @@
     <string name="card_config_card_block">Заблокировать карту</string>
     <string name="card_config_card_delete">Удалить карту</string>
     <string name="card_config_card_create">Save card</string>
+    <string name="card_config_card_update">Update card</string>
 
 
+    <!--carrier payment-->
+    <string name="carrier_main">Оплата мобильной связи</string>
+    <string name="carrier_main_number">Номер</string>
+    <string name="carrier_main_amount">Сумма</string>
+    <string name="carrier_main_pay">Оплатить</string>
+
+    <!--transfer-->
+    <string name="transfer_perform_success">Транзакция прошла успешно</string>
+    <string name="transfer_perform_faulty">Ошибка транзакции</string>
+
+    <!-- configuration-->
+    <string name="configuration_profile">Profile</string>
+    <string name="configuration_security">Security</string>
+    <string name="configuration_monitoring">Payment monitor</string>
+    <string name="configuration_public_offer">Public Offer</string>
+    <string name="configuration_night_theme">Night Theme</string>
+
+    <!-- ucell subscriber-->
+    <string name="ucell_subscriber_number_info">Number Info</string>
+    <string name="ucell_subscriber_number">Number</string>
+    <string name="ucell_subscriber_po">Primary Offer</string>
+    <string name="ucell_subscriber_refill">Balance refill</string>
+    <string name="ucell_subscriber_vbalance">Voice Balances</string>
+    <string name="ucell_subscriber_vbalance_1">On-net calls</string>
+    <string name="ucell_subscriber_vbalance_2">Bonus minutes(On-net)</string>
+    <string name="ucell_subscriber_vbalance_3">Minutes within Uzbekistan according to the tariff plan</string>
+    <string name="ucell_subscriber_databalance">Data Balances</string>
+    <string name="ucell_subscriber_databalance_1">Daily/Weekly Data Balance</string>
+    <string name="ucell_subscriber_databalance_2">Data Balance by tariff plan</string>
+    <string name="ucell_subscriber_databalance_3">Monthly Data Balance</string>
+    <string name="ucell_subscriber_databalance_4">Additional Data Balance</string>
 </resources>

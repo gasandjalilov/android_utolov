@@ -6,7 +6,7 @@ import dagger.Module
 import dagger.Provides
 import uz.rdu.ucell_utolov.MainApplication
 import uz.rdu.ucell_utolov.dagger_implementations.scope.PerApplication
-import uz.rdu.ucell_utolov.interfaces.api.ApiProfileInterface
+import uz.rdu.ucell_utolov.interfaces.api.*
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -34,5 +34,24 @@ class ApplicationModule(private val mainApplication: MainApplication) {
         return ApiProfileInterface.create(context)
     }
 
+    @Provides
+    fun ApiMerchantsService(context:Context): ApiMerchantInterface {
+        return ApiMerchantInterface.create(context)
+    }
 
+    @Provides
+    fun ApiP2PService(context: Context): ApiP2PPerformInterface{
+        return ApiP2PPerformInterface.create(context)
+    }
+
+    @Provides
+    fun ApiTransactionHistoryService(context: Context): ApiTransactionHistoryInteraface{
+        return ApiTransactionHistoryInteraface.create(context)
+    }
+
+
+    @Provides
+    fun ApiUcellInteraface(context: Context):ApiUcellInteraface{
+        return ApiUcellInteraface.create(context)
+    }
 }

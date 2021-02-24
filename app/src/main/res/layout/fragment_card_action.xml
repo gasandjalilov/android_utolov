@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:backgroundTint="@color/whiteText"
+                android:backgroundTint="@color/whiteBackground"
                 android:text="@string/card_all"
                 android:textColor="@color/colorPrimary" />
 
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:backgroundTint="@color/whiteText"
+                android:backgroundTint="@color/whiteBackground"
                 android:text="@string/card_uzcard"
                 android:textColor="@color/colorPrimary" />
 
@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:backgroundTint="@color/whiteText"
+                android:backgroundTint="@color/whiteBackground"
                 android:text="@string/card_humo"
                 android:textColor="@color/colorPrimary" />
 

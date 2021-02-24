@@ -10,23 +10,52 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_paymentFragment"
-            app:destination="@id/paymentFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_cardActionFragment"
-            app:destination="@id/cardActionFragment" />
-    </fragment>
-
-
-    <fragment
-        android:id="@+id/paymentFragment"
-        android:name="uz.rdu.ucell_utolov.fragments.PaymentFragment"
-        android:label="fragment_payment"
-        tools:layout="@layout/fragment_payment">
+            app:destination="@id/cardActionFragment"
+            app:enterAnim="@anim/slide_in_left_fragment"
+            app:exitAnim="@anim/slide_out_right_fragment"
+            app:popEnterAnim="@anim/slide_out_right_fragment"
+            app:popExitAnim="@anim/slide_in_left_fragment" />
         <action
-            android:id="@+id/action_paymentFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
+            android:id="@+id/action_homeFragment_to_mobileCarrierPaymentFragment"
+            app:destination="@id/mobileCarrierPaymentFragment"
+            app:enterAnim="@anim/slide_in_left_fragment"
+            app:exitAnim="@anim/slide_out_right_fragment"
+            app:popEnterAnim="@anim/slide_in_left_fragment"
+            app:popExitAnim="@anim/slide_out_right_fragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_merchantFragment"
+            app:destination="@id/merchantFragment"
+            app:enterAnim="@anim/slide_in_left_fragment"
+            app:exitAnim="@anim/slide_out_right_fragment"
+            app:popEnterAnim="@anim/slide_in_left_fragment"
+            app:popExitAnim="@anim/slide_out_right_fragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_transferFragment"
+            app:destination="@id/transferFragment"
+            app:enterAnim="@anim/slide_in_left_fragment"
+            app:exitAnim="@anim/slide_out_right_fragment"
+            app:popEnterAnim="@anim/slide_out_right_fragment"
+            app:popExitAnim="@anim/slide_in_left_fragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_in_left_fragment"
+            app:exitAnim="@anim/slide_out_right_fragment"
+            app:popEnterAnim="@anim/slide_out_right_fragment"
+            app:popExitAnim="@anim/slide_in_left_fragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_uballsFragment"
+            app:destination="@id/uballsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_payByMerchantFragment"
+            app:destination="@id/payByMerchantFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_ucellSubscriberFragment"
+            app:destination="@id/ucellSubscriberFragment" />
     </fragment>
+
+
     <fragment
         android:id="@+id/settingsFragment"
         android:name="uz.rdu.ucell_utolov.fragments.SettingsFragment"
@@ -61,6 +90,49 @@
             android:id="@+id/action_cardConfigurationFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/mobileCarrierPaymentFragment"
+        android:name="uz.rdu.ucell_utolov.fragments.MobileCarrierPaymentFragment"
+        android:label="MobileCarrierPaymentFragment">
+        <argument
+            android:name="number"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/merchantFragment"
+        android:name="uz.rdu.ucell_utolov.fragments.MerchantFragment"
+        android:label="MerchantFragment" >
+        <action
+            android:id="@+id/action_merchantFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_merchantFragment_to_payByMerchantFragment"
+            app:destination="@id/payByMerchantFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/uballsFragment"
+        android:name="uz.rdu.ucell_utolov.fragments.UballsFragment"
+        android:label="UballsFragment" />
+    <fragment
+        android:id="@+id/payByMerchantFragment"
+        android:name="uz.rdu.ucell_utolov.fragments.PayByMerchantFragment"
+        android:label="PayByMerchantFragment">
+
+        <argument
+            android:name="dbtransaction"
+            app:argType="uz.rdu.ucell_utolov.models.transaction.innertransaction.DBTransaction"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument
+            android:name="merchant"
+            app:argType="uz.rdu.ucell_utolov.models.merchantmodels.MerchantData"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+    </fragment>
+    <fragment
+        android:id="@+id/ucellSubscriberFragment"
+        android:name="uz.rdu.ucell_utolov.fragments.UcellSubscriberFragment"
+        android:label="UcellSubscriberFragment" />
 
 
 </navigation>

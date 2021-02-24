@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.github.islamkhsh.CardSliderAdapter
@@ -17,28 +18,27 @@ import uz.rdu.ucell_utolov.helpers.ApplicationDatabase
 import uz.rdu.ucell_utolov.models.profilemodels.ProfileResponse
 import kotlin.random.Random
 
-class HomeCardsAdapter(private val profiles: List<ProfileResponse>,context:Context): CardSliderAdapter<HomeCardsAdapter.HomeViewHolder>()  {
+class HomeCardsAdapter(private val profiles: List<ProfileResponse>,context:Context?): CardSliderAdapter<HomeCardsAdapter.HomeViewHolder>()  {
 
 
 
 
     var list = mutableListOf(R.drawable.card_gradient_1,R.drawable.card_gradient_2,R.drawable.card_gradient_3,R.drawable.card_gradient_4,R.drawable.card_gradient_5,R.drawable.card_gradient_6)
-    var db =
-        ApplicationDatabase.getAppDataBase(context)
+    var db = ApplicationDatabase.getAppDataBase(context)
 
 
 
     override fun bindVH(holder: HomeViewHolder, position: Int) {
         val profile = profiles[position]
-
+        var layout = holder.itemView.findViewById<ConstraintLayout>(R.id.card_layout) as ConstraintLayout
         var elementNumber = holder.itemView.findViewById<TextView>(R.id.card_element_number) as TextView
         var card_exp = holder.itemView.findViewById<TextView>(R.id.card_element_exp) as TextView
         var amount = holder.itemView.findViewById<TextView>(R.id.card_element_amount) as TextView
         var card = holder.itemView.findViewById<CardView>(R.id.card_element_cardview) as CardView
 
         var cardnum:String?
-        if(profile.card_number!!.length>2) {
-            cardnum = profile.card_number?.replaceRange(4, 12, " **** **** ")
+        if(profile.card_number.length>2) {
+            cardnum = profile.card_number.replaceRange(4, 12, " **** **** ")
         }
         else {
             cardnum = profile.card_number
@@ -55,20 +55,25 @@ class HomeCardsAdapter(private val profiles: List<ProfileResponse>,context:Conte
             amount.visibility=View.GONE
             button.setOnClickListener{
                 val action = HomeFragmentDirections.actionHomeFragmentToCardActionFragment()
-                it.findNavController()?.navigate(action)
+                it.findNavController().navigate(action)
             }
         }
         else {
+            var card_amount = profile.balance?.toDouble()
             elementNumber.text = cardnum
-            card_exp.text = profile.card_expire
-            amount.text = profile.balance
+            card_exp.text = profile.card_expire!!.addCharAtIndex('/',2)
+            amount.text = String.format("%,d", card_amount?.toLong())
+
             var rand = Random
             var dbCard = db?.profileResponseDao()?.findByCardNumber(profile.card_number)
             if(dbCard?.card_color != null) {
-                card.setBackgroundResource(dbCard.card_color!!)
+                card.setBackgroundResource(list[rand.nextInt(list.size)])
+                layout.setBackgroundResource(R.drawable.ic_card_background_1)
+                //card.setBackgroundResource(dbCard.card_color!!)
             }
             else {
                 card.setBackgroundResource(list[rand.nextInt(list.size)])
+                layout.setBackgroundResource(R.drawable.ic_card_background_1)
             }
         }
     }
@@ -86,5 +91,10 @@ class HomeCardsAdapter(private val profiles: List<ProfileResponse>,context:Conte
 
 
     class HomeViewHolder(view: View) : RecyclerView.ViewHolder(view)
+
+
+    fun String.addCharAtIndex(char: Char, index: Int) =
+        StringBuilder(this).apply { insert(index, char) }.toString()
+
 
 }

@@ -43,7 +43,7 @@ class StartupFlashScreenViewModel(application: Application):ViewModel(),Startup_
 
     override fun chooseLanguage() {
         SharedPrefHelper(application).setSelectedLang(language)
-        Log.i("Current Language : {}",SharedPrefHelper(application)!!.getSelectedLang())
+        Log.i("Current Language : {}", SharedPrefHelper(application).getSelectedLang())
         _navigateScreen.value = Event(R.id.action_startupFlashScreenFragment_to_registrationFragment)
     }
 

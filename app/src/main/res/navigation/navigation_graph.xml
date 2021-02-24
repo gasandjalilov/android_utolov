@@ -39,9 +39,6 @@
             android:id="@+id/action_registrationFragment_to_pinFragment"
             app:destination="@id/pinFragment">
         </action>
-        <action
-            android:id="@+id/action_registrationFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/pinFragment"

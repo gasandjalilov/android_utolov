@@ -6,14 +6,13 @@
         android:title="@string/main_navbar_bottom"/>
 
     <item
-        android:id="@+id/paymentFragment"
+        android:id="@+id/merchantFragment"
         android:icon="@drawable/ic_payment"
         android:title="@string/payment_navbar_bottom"/>
 
     <item
         android:id="@+id/menuFragment"
-        android:icon="@drawable/ic_menu"
-        android:title="@string/menu_navbar_bottom"/>
+        android:title=""/>
 
 
 
