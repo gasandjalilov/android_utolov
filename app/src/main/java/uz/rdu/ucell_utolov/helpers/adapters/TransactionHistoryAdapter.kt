@@ -51,6 +51,6 @@ class TransactionHistoryAdapter(private val transactionHistoryPaymentsResponse: 
     }
 
     override fun getItemCount(): Int {
-        return history.size
+        return 3//history.size
     }
 }

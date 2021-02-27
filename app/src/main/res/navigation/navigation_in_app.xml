@@ -53,6 +53,9 @@
         <action
             android:id="@+id/action_homeFragment_to_ucellSubscriberFragment"
             app:destination="@id/ucellSubscriberFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
     </fragment>
 
 
@@ -133,6 +136,10 @@
         android:id="@+id/ucellSubscriberFragment"
         android:name="uz.rdu.ucell_utolov.fragments.UcellSubscriberFragment"
         android:label="UcellSubscriberFragment" />
+    <fragment
+        android:id="@+id/articleFragment"
+        android:name="uz.rdu.ucell_utolov.fragments.ArticleFragment"
+        android:label="ArticleFragment" />
 
 
 </navigation>

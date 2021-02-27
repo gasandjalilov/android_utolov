@@ -118,8 +118,10 @@ class HomeViewModel(var user: AdvUser) : ViewModel(),
         TODO("Not yet implemented")
     }
 
-    override fun getNews() {
-        TODO("Not yet implemented")
+    override fun getNews(v: View) {
+        var fragmentDirection =
+            HomeFragmentDirections.actionHomeFragmentToArticleFragment()
+        v.findNavController().navigate(fragmentDirection)
     }
 
     override fun getAccount(v: View) {

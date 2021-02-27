@@ -45,5 +45,5 @@ interface ApplicationComponent {
     fun inject(transferViewModel: TransferViewModel)
     fun inject(homeViewModel: HomeViewModel)
     fun inject(websocketConnector: WebsocketConnector)
-
+    fun inject(articleFragment: ArticleFragment)
 }

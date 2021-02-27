@@ -13,6 +13,7 @@ object Constants {
     val P2P_URL = BASE_URL + "/v1/p2p-service/"
     val UCELL_PROFILE = BASE_URL + "/v1/ucellprofile-service/"
     val WEBSOCKET = BASE_URL + "/v1/websocket-service/"
+    val ARTICLE_URL = BASE_URL + "/v1/article-service/"
 
     val WEBSOCKETWS = "ws://188.113.225.10:8060/"
 

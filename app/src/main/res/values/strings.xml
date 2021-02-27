@@ -92,4 +92,7 @@
     <string name="ucell_subscriber_databalance_3">Monthly Data Balance</string>
     <string name="ucell_subscriber_databalance_4">Additional Data Balance</string>
 
+    <!-- ucell articles -->
+    <string name="article_main">Новости</string>
+
 </resources>

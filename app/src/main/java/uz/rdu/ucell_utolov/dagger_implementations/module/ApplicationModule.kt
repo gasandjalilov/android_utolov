@@ -54,4 +54,11 @@ class ApplicationModule(private val mainApplication: MainApplication) {
     fun ApiUcellInteraface(context: Context):ApiUcellInteraface{
         return ApiUcellInteraface.create(context)
     }
+
+
+    @Provides
+    fun ApiArticleInterface(context: Context):ApiArticleInterface{
+        return ApiArticleInterface.create(context)
+    }
 }
+

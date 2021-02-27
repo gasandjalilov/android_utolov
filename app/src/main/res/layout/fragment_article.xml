@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/mainBackGround"
+    >
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="vmodel"
+            type="uz.rdu.ucell_utolov.modelviews.ArticleViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".fragments.ArticleFragment">
+
+        <TextView
+            style="@style/UtolovTextHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:gravity="start"
+            android:text="@string/article_main" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/article_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+    </LinearLayout>
+</layout>
