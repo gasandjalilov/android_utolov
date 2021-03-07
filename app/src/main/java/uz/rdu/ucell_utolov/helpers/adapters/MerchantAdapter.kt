@@ -43,8 +43,12 @@ class MerchantAdapter(list: List<MerchantData>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         //holder.textView.text = merchants[position].name
         var url: Uri = Uri.parse(merchants[position].url)
-        Picasso.get().load(url).transform(RoundedCornersTransformation(100, 20)).resize(250, 250)
-            .centerCrop().into(holder.imageView)
+        Picasso
+            .get()
+            .load(url)
+            .transform(RoundedCornersTransformation(100, 20)).resize(250, 250)
+            .centerCrop()
+            .into(holder.imageView)
         holder.text.text = merchants[position].merchant.name
         holder.imageView.setOnClickListener{
             var fragmentDirection =

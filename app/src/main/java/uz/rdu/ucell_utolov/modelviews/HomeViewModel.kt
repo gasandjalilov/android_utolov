@@ -77,6 +77,7 @@ class HomeViewModel(var user: AdvUser) : ViewModel(),
             }
             homeView = MutableLiveData(HomeFragmentModel(String.format("%.2f", amount), profile, user))
             observable_amount.set(homeView.value?.amount)
+
         }
     }
 

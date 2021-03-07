@@ -6,15 +6,44 @@ import android.util.Log
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.google.gson.Gson
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import uz.rdu.ucell_utolov.models.AdvUser
 import uz.rdu.ucell_utolov.models.User
+import java.util.*
 import java.util.Base64.getDecoder
+import java.util.concurrent.TimeUnit
 
 
 class SharedPrefHelper(context: Context) {
 
     val context = context
 
+    fun setTimeOfStop() = GlobalScope.async {
+        val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
+        val sharedPreferences: SharedPreferences = EncryptedSharedPreferences.create(
+            "user",
+            masterKeyAlias,
+            context,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        sharedPreferences.edit().putLong("time",TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis())).commit()
+    }
+
+    suspend fun getTimeOfStop(): Long?{
+        val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
+        val sharedPreferences: SharedPreferences = EncryptedSharedPreferences.create(
+            "user",
+            masterKeyAlias,
+            context,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        return sharedPreferences.getLong("time", TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis()))
+    }
 
     fun getSelectedLang(): String? {
         val sharedPreferences = context.getSharedPreferences("app_language", Context.MODE_PRIVATE)
@@ -38,7 +67,7 @@ class SharedPrefHelper(context: Context) {
         return sharedPreferences.getString("token", "")
     }
 
-    fun savePin(pin: String){
+    fun savePin(pin: String) = GlobalScope.async {
         val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
 
         val sharedPreferences: SharedPreferences = EncryptedSharedPreferences.create(
@@ -51,7 +80,7 @@ class SharedPrefHelper(context: Context) {
         sharedPreferences.edit().putString("pin", pin).commit()
     }
 
-    fun validatePin(pin: String):Boolean{
+    suspend fun validatePin(pin: String):Boolean{
         val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
         val sharedPreferences: SharedPreferences = EncryptedSharedPreferences.create(
             "pin",
@@ -64,7 +93,7 @@ class SharedPrefHelper(context: Context) {
         return pin.equals(coorect)
     }
 
-    fun getPin():String?{
+    suspend fun getPin():String?{
         val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
         val sharedPreferences: SharedPreferences = EncryptedSharedPreferences.create(
             "pin",
@@ -77,7 +106,7 @@ class SharedPrefHelper(context: Context) {
         return coorect
     }
 
-    fun saveUserObject(userObject: AdvUser?){
+    fun saveUserObject(userObject: AdvUser?) = GlobalScope.async {
         val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
 
         val sharedPreferences: SharedPreferences = EncryptedSharedPreferences.create(
@@ -92,17 +121,20 @@ class SharedPrefHelper(context: Context) {
     }
 
     fun getUserObject(): AdvUser? {
-        val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
-        val sharedPreferences: SharedPreferences = EncryptedSharedPreferences.create(
-            "user",
-            masterKeyAlias,
-            context,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
-        var user = sharedPreferences.getString("user", "")
+        return kotlin.run {
+            val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
+            val sharedPreferences: SharedPreferences = EncryptedSharedPreferences.create(
+                "user",
+                masterKeyAlias,
+                context,
+                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            )
+            var user = sharedPreferences.getString("user", "")
 
-        return Gson().fromJson(user, AdvUser::class.java)
+            Gson().fromJson(user, AdvUser::class.java)
+        }
+
     }
 
 }

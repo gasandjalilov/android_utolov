@@ -1,33 +1,31 @@
 package uz.rdu.ucell_utolov.modelviews
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.view.View
-import android.widget.FrameLayout
-import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.google.android.material.snackbar.Snackbar
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.*
 import uz.rdu.ucell_utolov.MainApplication
-import uz.rdu.ucell_utolov.R
 import uz.rdu.ucell_utolov.fragments.HomeFragmentDirections
-import uz.rdu.ucell_utolov.helpers.ApplicationDatabase
 import uz.rdu.ucell_utolov.helpers.SharedPrefHelper
 import uz.rdu.ucell_utolov.interfaces.MainViewModelInterface
 import uz.rdu.ucell_utolov.interfaces.api.ApiMerchantInterface
 import uz.rdu.ucell_utolov.interfaces.api.ApiProfileInterface
+import uz.rdu.ucell_utolov.interfaces.api.ApiTransactionHistoryInteraface
 import uz.rdu.ucell_utolov.interfaces.api.ApiUcellInteraface
 import uz.rdu.ucell_utolov.models.AdvUser
 import uz.rdu.ucell_utolov.models.merchantmodels.Merchant
 import uz.rdu.ucell_utolov.models.profilemodels.ProfileRequest
 import uz.rdu.ucell_utolov.models.profilemodels.ProfileResponse
+import uz.rdu.ucell_utolov.models.transactionhistorymodels.TransactionHistoryPayment
 import uz.rdu.ucell_utolov.models.transactionhistorymodels.TransactionHistoryRequest
 import uz.rdu.ucell_utolov.models.ucell.Balances
 import uz.rdu.ucell_utolov.models.ucell.Data
@@ -42,24 +40,27 @@ class MainViewModel : MainViewModelInterface, ViewModel() {
     lateinit var applicationModule: ApiProfileInterface
 
     @Inject
-    lateinit var ucellModule:ApiUcellInteraface
+    lateinit var ucellModule: ApiUcellInteraface
+
+    @Inject
+    lateinit var transactionHistory: ApiTransactionHistoryInteraface
 
     @Inject
     lateinit var context: Context
 
     lateinit var navController: NavController
 
-    lateinit var cardList: MutableList<ProfileResponse>
-
     var balances: MutableLiveData<Balances> = MutableLiveData()
     var ucell_profile: MutableLiveData<UcellResponse> = MutableLiveData()
     var cardListLive: MutableLiveData<List<ProfileResponse>> = MutableLiveData()
+    var transactionHistoryPayment: MutableLiveData<TransactionHistoryPayment> = MutableLiveData()
+
 
     var frameVisibility = ObservableField(View.INVISIBLE)
 
     var user: AdvUser
 
-    var balance = ObservableField<String>()
+    var balance = MutableLiveData<String>()
 
     var loading = ObservableBoolean()
 
@@ -67,27 +68,29 @@ class MainViewModel : MainViewModelInterface, ViewModel() {
         frameVisibility.set(View.GONE)
         MainApplication.component.inject(this)
         user = account()!!
-        if(!this::cardList.isInitialized) {
-            getProfile()
-            setBalance()
-        }
+    }
+
+    fun initial() {
+        getProfile()
+        setBalance()
+        getTransactionHistory()
     }
 
 
     override fun getProfile() {
-        Log.d("getProfileRequest","MainViewModel")
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 loading.set(true)
-                var request = ProfileRequest(account()!!.username!!)
-                var resp = applicationModule.retrieve(request).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
-                    cardListLive.value = it.body!!
-                    loading.set(false)
-                },{
-                    Log.e("getProfile",it.message)
-                })
-            }
-            catch (e:Exception){
+                val request = ProfileRequest(account()!!.username!!)
+                applicationModule.retrieve(request)
+                    .observeOn(Schedulers.newThread())
+                    .subscribeOn(Schedulers.io()).subscribe({
+                        cardListLive.postValue(it.body!!)
+                        loading.set(false)
+                    }, {
+                        Log.e("getProfile", it.message)
+                    })
+            } catch (e: Exception) {
                 throw Exception("PROFILE ERROR")
             }
 
@@ -100,7 +103,7 @@ class MainViewModel : MainViewModelInterface, ViewModel() {
 
 
     override fun account(): AdvUser? {
-        return SharedPrefHelper(context).getUserObject()
+        return kotlin.run { SharedPrefHelper(context).getUserObject() }
     }
 
     override fun myCardsButtonAction(v: View) {
@@ -143,27 +146,28 @@ class MainViewModel : MainViewModelInterface, ViewModel() {
     }
 
 
-    fun setBalance(){
+    @SuppressLint("CheckResult")
+    fun setBalance() {
         //var string = context.resources(R.string.home_balance)
-
         ucellModule.retrieveLastInP2P(TransactionHistoryRequest(user.username!!))
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(Schedulers.newThread())
             .subscribeOn(Schedulers.io())
             .subscribe({ response ->
-                balance.set(response.availBalance)
+                balance.postValue(response.availBalance)
                 castToBalance(response.data)
-                ucell_profile.value = response
-            },{error ->
-                Log.e("Error Recieved",error.message)
+                ucell_profile.postValue(response)
+            }, { error ->
+                Log.e("Error setBalance", error.message)
             }
             )
 
+
     }
 
-    fun castToBalance(data: List<Data>?){
+    fun castToBalance(data: List<Data>?) {
         var balances = Balances()
         data?.forEach {
-            when(it.balanceId){
+            when (it.balanceId) {
                 "682" -> balances.dataBalance1 = it.availableBalance
                 "683" -> balances.dataBalance2 = it.availableBalance
                 "696" -> balances.dataBalance3 = it.availableBalance
@@ -174,7 +178,18 @@ class MainViewModel : MainViewModelInterface, ViewModel() {
                 "669" -> balances.voiceBalance3 = it.availableBalance
             }
         }
-        this.balances.value = balances
+        this.balances.postValue(balances)
     }
 
+
+    @SuppressLint("CheckResult")
+    fun getTransactionHistory() {
+        transactionHistory.retrieveLastInP2P(TransactionHistoryRequest(user.username!!))
+            .observeOn(Schedulers.newThread())
+            .subscribeOn(Schedulers.single())
+            .subscribe {
+                transactionHistoryPayment.postValue(it)
+            }
+
+    }
 }

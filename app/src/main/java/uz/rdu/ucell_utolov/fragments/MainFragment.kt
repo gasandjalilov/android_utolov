@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
@@ -12,6 +11,8 @@ import androidx.annotation.IdRes
 import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavController.OnDestinationChangedListener
 import androidx.navigation.NavDestination
@@ -26,12 +27,12 @@ import com.google.android.material.shape.MaterialShapeDrawable
 import uz.rdu.ucell_utolov.R
 import uz.rdu.ucell_utolov.databinding.FragmentMainBinding
 import uz.rdu.ucell_utolov.helpers.AuthHelper
-import uz.rdu.ucell_utolov.helpers.WebsocketConnector
 import uz.rdu.ucell_utolov.interfaces.api.ApiMerchantInterface
 import uz.rdu.ucell_utolov.interfaces.api.ApiProfileInterface
 import uz.rdu.ucell_utolov.models.AdvUser
 import uz.rdu.ucell_utolov.modelviews.MainViewModel
 import java.lang.ref.WeakReference
+import java.util.EnumSet.of
 import javax.inject.Inject
 
 
@@ -39,7 +40,9 @@ class MainFragment : Fragment() {
 
     //getting value as argument
     private val args: MainFragmentArgs by navArgs()
-    lateinit var mainViewModel: MainViewModel
+    private val mainViewModel: MainViewModel by activityViewModels()
+
+
     lateinit var MenuFrame: FrameLayout
     lateinit var MenuFrameCard: CardView
     lateinit var animation: Animation
@@ -59,7 +62,6 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         var user: AdvUser = args.userObject
-        mainViewModel = MainViewModel()
         var mainBinding: FragmentMainBinding = DataBindingUtil.inflate<FragmentMainBinding>(
             inflater,
             R.layout.fragment_main,
@@ -205,3 +207,4 @@ class MainFragment : Fragment() {
 
 
 }
+

@@ -10,6 +10,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import com.github.islamkhsh.CardSliderViewPager
 import kotlinx.android.synthetic.main.card_element.view.*
+import kotlinx.coroutines.runBlocking
 import uz.rdu.ucell_utolov.MainApplication
 import uz.rdu.ucell_utolov.R
 import uz.rdu.ucell_utolov.helpers.SharedPrefHelper
@@ -50,17 +51,18 @@ class MobileCarrierPaymentViewModel : ViewModel() {
 
         var shared = SharedPrefHelper(context)
         var usr = shared.getUserObject()
+        var transactionPerformRequest: TransactionPerformRequest = TransactionPerformRequest()
+        runBlocking {
+            transactionPerformRequest.amount = amount.get()!!.toInt()
+            transactionPerformRequest.cardnumber = cardnumber.toString()
+            transactionPerformRequest.cardexp = card_exp.toString()
+            transactionPerformRequest.notif_lang = "ru"
+            transactionPerformRequest.merchant_id = merchant_id
+            transactionPerformRequest.msisdn = usr?.username.toString()
+            transactionPerformRequest.pin = shared.getPin()
+            transactionPerformRequest.payment_account = number.get().toString()
+        }
 
-        var transactionPerformRequest: TransactionPerformRequest = TransactionPerformRequest(
-            amount = amount.get()!!.toInt(),
-            cardnumber = cardnumber.toString(),
-            cardexp = card_exp.toString(),
-            notif_lang = "ru",
-            merchant_id = merchant_id,
-            msisdn = usr!!.username.toString(),
-            pin = shared.getPin()!!,
-            payment_account = number.get().toString()
-        )
 
         var response = applicationModule.pay(transactionPerformRequest).execute()
         if(response.code() == 200) Toast.makeText(context,response.body().toString(),Toast.LENGTH_LONG)

@@ -19,6 +19,8 @@ import com.andrognito.pinlockview.PinLockListener
 import com.andrognito.pinlockview.PinLockView
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_transfer.view.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.runBlocking
 import uz.rdu.ucell_utolov.MainApplication
 import uz.rdu.ucell_utolov.R
 import uz.rdu.ucell_utolov.databinding.FragmentPhonePinBinding
@@ -85,19 +87,21 @@ class PhonePinFragment : Fragment() {
                         var regex = Regex("[^0-9]")
                         var username = regex.replace(registrationViewModel.number.get()!!,"")
                         var response = applicationModule.pin_set(PinSet(pin,username)).execute().body()
-                        prefuser.savePin(pin)
-
+                        GlobalScope.run {
+                            prefuser.savePin(pin)
+                        }
                         Log.d("PIN CHANGED",response.toString())
                         var user = User(username,registrationViewModel.password.get())
-
-                        var adbUser = SharedPrefHelper(requireContext()).getUserObject()
+                        runBlocking {
+                            var adbUser = SharedPrefHelper(requireContext()).getUserObject()
                             //applicationModule.login(user).execute().body()
 
-                        prefuser.saveUserObject(adbUser)
-                        Log.d("User",adbUser.toString())
+                            prefuser.saveUserObject(adbUser)
+                            Log.d("User",adbUser.toString())
 
-                        var fragmentDirection = PhonePinFragmentDirections.actionPhonePinFragmentToMainFragment(adbUser!!)
-                        view!!.findNavController().navigate(fragmentDirection)
+                            var fragmentDirection = PhonePinFragmentDirections.actionPhonePinFragmentToMainFragment(adbUser!!)
+                            view!!.findNavController().navigate(fragmentDirection)
+                        }
                     }
                     else{
                         text.setTextColor(R.color.colorPrimary)

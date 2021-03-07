@@ -3,10 +3,8 @@ package uz.rdu.ucell_utolov.helpers
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import okhttp3.MediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody
+import kotlinx.coroutines.runBlocking
+import okhttp3.*
 import org.json.JSONObject
 import uz.rdu.ucell_utolov.MainApplication
 import uz.rdu.ucell_utolov.helpers.Constants.BASE_URL
@@ -20,9 +18,13 @@ object AuthHelper {
 
 
     fun getToken(context: Context): renewTokenResponse? {
-        var tmpuser: AdvUser? = SharedPrefHelper(context).getUserObject()
+        var tmpuser: AdvUser? = null
+        runBlocking {
+            tmpuser = SharedPrefHelper(context).getUserObject()
+        }
+
         val refreshRequest: renewTokenRequest =
-            renewTokenRequest(refresh_token = tmpuser!!.refreshtoken, username = tmpuser.username)
+            renewTokenRequest(refresh_token = tmpuser?.refreshtoken, username = tmpuser?.username)
         val str: String = Gson().toJson(refreshRequest)
         val requestBody = RequestBody.create(MediaType.parse("application/json"), str)
         val client = OkHttpClient.Builder().connectTimeout(200, TimeUnit.SECONDS).readTimeout(
@@ -34,7 +36,7 @@ object AuthHelper {
             .url(BASE_URL + "/v1/auth/renew")
             .post(requestBody)
             .build()
-        try{
+        try {
             val resp = client.newCall(req).execute()
             if (resp.code() != 200) {
                 return null
@@ -45,10 +47,10 @@ object AuthHelper {
                     gson.fromJson(some.toString(), renewTokenResponse::class.java)
                 return user
             }
-        }
-        catch (e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
             return null
         }
     }
+    
 }

@@ -13,6 +13,8 @@ import android.widget.Toast
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import com.github.islamkhsh.CardSliderViewPager
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import uz.rdu.ucell_utolov.MainApplication
 import uz.rdu.ucell_utolov.R
 import uz.rdu.ucell_utolov.helpers.ApplicationDatabase
@@ -46,7 +48,7 @@ class PayByMerchantViewModel: ViewModel(){
         db= ApplicationDatabase.getAppDataBase(context)!!
     }
 
-    fun pay(view:View){
+    fun pay(view:View) = GlobalScope.async {
         var cardId = cardSliderViewPager.currentItem
         var tag = cardSliderViewPager.findViewWithTag<View>(cardId)
         var cardnumber = tag.findViewById<TextView>(R.id.card_element_hiden).text

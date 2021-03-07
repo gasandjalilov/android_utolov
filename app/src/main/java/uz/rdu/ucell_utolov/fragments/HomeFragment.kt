@@ -13,6 +13,7 @@ import androidx.databinding.ObservableBoolean
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -40,6 +41,7 @@ import uz.rdu.ucell_utolov.models.transactionhistorymodels.TransactionHistoryPay
 import uz.rdu.ucell_utolov.models.transactionhistorymodels.TransactionHistoryRequest
 import uz.rdu.ucell_utolov.modelviews.HomeViewModel
 import uz.rdu.ucell_utolov.modelviews.MainViewModel
+import java.lang.Exception
 import javax.inject.Inject
 
 
@@ -47,7 +49,7 @@ class HomeFragment : Fragment() {
 
     lateinit var homeViewModel: HomeViewModel
 
-    private val model: MainViewModel by activityViewModels()
+    lateinit var model: MainViewModel
 
     @Inject
     lateinit var merchantModule: ApiMerchantInterface
@@ -58,16 +60,14 @@ class HomeFragment : Fragment() {
     @Inject
     lateinit var transactionHistory: ApiTransactionHistoryInteraface
 
-
     lateinit var homeCardsAdapter: HomeCardsAdapter
     lateinit var listMerchant: List<MerchantData>
 
     lateinit var merchantRecyclerView: RecyclerView
     lateinit var historyRecyclerView: RecyclerView
-    lateinit var history: List<TransactionHistoryPaymentsResponse>
+    var history: List<TransactionHistoryPaymentsResponse>? = null
     lateinit var homeBinding: FragmentHomeBinding
-    lateinit var db : ApplicationDatabase
-
+    lateinit var db: ApplicationDatabase
 
 
     override fun onCreateView(
@@ -75,6 +75,10 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         MainApplication.component.inject(this)
+        model = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        if (model.ucell_profile.value == null) {
+            model.initial()
+        }
         homeBinding = DataBindingUtil.inflate<FragmentHomeBinding>(
             inflater,
             R.layout.fragment_home,
@@ -82,7 +86,6 @@ class HomeFragment : Fragment() {
             false
         )
         db = ApplicationDatabase.getAppDataBase(requireContext())!!
-        var user = SharedPrefHelper(requireContext()).getUserObject()
         /*
             GlobalScope.launch(Dispatchers.Main) {
                 homeBinding.progressBar.visibility= View.VISIBLE
@@ -111,7 +114,7 @@ class HomeFragment : Fragment() {
             setDataToAdapter(it.toMutableList())
         })
         homeViewModel = HomeViewModel(model.account()!!)
-        homeViewModel.viewModel=model
+        homeViewModel.viewModel = model
         homeBinding.mvmodel = model
         homeBinding.vmodel = homeViewModel
         homeViewModel.homeBinding = homeBinding
@@ -123,9 +126,7 @@ class HomeFragment : Fragment() {
     }
 
 
-
-
-    fun setDataToAdapter(data:MutableList<ProfileResponse>){
+    fun setDataToAdapter(data: MutableList<ProfileResponse>) {
         homeCardsAdapter = HomeCardsAdapter(data, this.context)
         val cardSliderViewPager =
             homeBinding.root.findViewById(R.id.viewPager) as CardSliderViewPager
@@ -133,18 +134,16 @@ class HomeFragment : Fragment() {
         homeViewModel.profile = data
         homeViewModel.initialData()
         cardSliderViewPager.adapter = homeCardsAdapter
-        Log.d("HomeFragmentsetData", "Data Set")
     }
 
     fun callMerchants() {
         var historyList = db.transactionDao().allSaved()
-        if(historyList.isNotEmpty()){
+        if (historyList.isNotEmpty()) {
             homeBinding.homeMerchants.visibility = View.VISIBLE
             homeBinding.homeTextHistory.visibility = View.VISIBLE
 
             setHistoryTrans(historyList.toList())
-        }
-        else{
+        } else {
             homeBinding.homeTextHistory.visibility = View.GONE
             homeBinding.homeMerchants.visibility = View.GONE
 
@@ -160,14 +159,11 @@ class HomeFragment : Fragment() {
          */
     }
 
-    fun callHistory(){
-        CoroutineScope(coroutineContext).async {
-            transactionHistory.retrieveLastInP2P(TransactionHistoryRequest(model.account()!!.username!!))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe({ response -> setTransactionHistory(response.body!!) },
-                    {error ->  getMerchantMethodError(error) })
-        }
+    fun callHistory() {
+        model.transactionHistoryPayment.observe(viewLifecycleOwner, Observer {
+            setTransactionHistory(it.body)
+
+        })
     }
 
 
@@ -187,7 +183,7 @@ class HomeFragment : Fragment() {
                 R.drawable.divider_main_merchants
             )!!
         )
-        merchantRecyclerView.adapter = DBTransactionAdapterHomeScreeen(requireContext(),merchants)
+        merchantRecyclerView.adapter = DBTransactionAdapterHomeScreeen(requireContext(), merchants)
     }
 
     fun setMerchants(merchants: List<MerchantData>) {
@@ -214,9 +210,9 @@ class HomeFragment : Fragment() {
         Log.d("Merchant Error", error.message)
     }
 
-    fun setTransactionHistory(transactions: List<TransactionHistoryPaymentsResponse>){
+    fun setTransactionHistory(transactions: List<TransactionHistoryPaymentsResponse>?) {
         this.history = transactions
-        historyRecyclerView.adapter = TransactionHistoryAdapter(transactions,requireContext())
+        historyRecyclerView.adapter = TransactionHistoryAdapter(transactions, requireContext(),true)
     }
 
 

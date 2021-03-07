@@ -18,25 +18,47 @@ import android.provider.Settings
 import android.util.Log
 import android.view.Window
 import android.view.WindowManager
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.media.session.MediaButtonReceiver.handleIntent
 import androidx.navigation.findNavController
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.*
+import uz.rdu.ucell_utolov.helpers.AuthHelper
 import uz.rdu.ucell_utolov.helpers.SharedPrefHelper
+import uz.rdu.ucell_utolov.models.AdvUser
+import uz.rdu.ucell_utolov.models.User
+import uz.rdu.ucell_utolov.models.renewTokenResponse
+import java.time.LocalDateTime
 import java.util.*
+import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 
 @Module()
 class MainActivity : AppCompatActivity() {
 
-    var sharedPrefHelper = SharedPrefHelper(this)
+    lateinit var sharedPrefHelper: SharedPrefHelper
+    var timeOfStop: MutableLiveData<Long> = MutableLiveData()
+
     private var intentFiltersArray: Array<IntentFilter>? = null
     private val techListsArray = arrayOf(arrayOf(NfcF::class.java.name))
     private val nfcAdapter: NfcAdapter? by lazy {
         NfcAdapter.getDefaultAdapter(this)
     }
     private var pendingIntent: PendingIntent? = null
+
+
+    override fun onStop() {
+        sharedPrefHelper.setTimeOfStop()
+        var minutes = runBlocking {
+            timeOfStop.value = sharedPrefHelper.getTimeOfStop()
+        }
+        super.onStop()
+    }
 
     @Provides
     fun provideActivity(): Activity? {
@@ -55,8 +77,10 @@ class MainActivity : AppCompatActivity() {
         )
         this.supportActionBar?.hide()
         setContentView(R.layout.activity_main)
-
-
+        sharedPrefHelper = SharedPrefHelper(applicationContext)
+        runBlocking {
+            timeOfStop.value = sharedPrefHelper.getTimeOfStop()
+        }
     }
 
     override fun attachBaseContext(base: Context?) {
@@ -100,19 +124,34 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onResume() {
-        var user = sharedPrefHelper.getUserObject()
+        var user:AdvUser? = null
+        runBlocking {
+            user = sharedPrefHelper.getUserObject()
+        }
+
         Log.i("user", user.toString())
-        if (user != null && user.status == "ACTIVE") {
+        if (user != null && user?.status == "ACTIVE") {
+            updateUser()
             var nav = findNavController(R.id.nav_host_fragment)
             nav.navigateUp()
-            nav.navigate(R.id.pinAuthFragment)
+            var curTime = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis())
+            var resultOfCalc = curTime - timeOfStop.value!!
+            if (resultOfCalc > 10) {
+                nav.navigate(R.id.pinAuthFragment)
+                super.onResume()
+            } else {
+                super.onResume()
+            }
+
+        } else {
+            super.onResume()
         }
-        super.onResume()
+
     }
 
     override fun onRestart() {
         Log.d("Activity on resume", "Resumed")
-
+        updateUser()
         super.onRestart()
     }
 
@@ -170,5 +209,17 @@ class MainActivity : AppCompatActivity() {
             builder.setTitle("ERROR")
             builder.setMessage("NFC action error.")
         }
+    }
+
+
+    fun updateUser() {
+
+        GlobalScope.launch {
+            var user: renewTokenResponse? = AuthHelper.getToken(applicationContext)
+            var objString = SharedPrefHelper(applicationContext).getUserObject()
+            objString?.token = user?.token
+            SharedPrefHelper(applicationContext).saveUserObject(objString)
+        }.start()
+
     }
 }

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import kotlinx.coroutines.runBlocking
 import uz.rdu.ucell_utolov.R
 import uz.rdu.ucell_utolov.databinding.StartupFlashScreenBinding
 import uz.rdu.ucell_utolov.helpers.EventObserver
@@ -47,14 +48,16 @@ class StartupFlashScreenFragment : Fragment() {
 
     fun checkUser(){
         var prefuser = SharedPrefHelper(requireContext())
-        var user =prefuser.getUserObject()
-        if(user != null && user.status.equals("active",true)){
-            Log.d("USER",prefuser.getUserObject().toString())
-            startupViewmodel.isAnimation.set(false)
-            startupViewmodel.progressVisible.set(true)
-            navController = Navigation.findNavController(requireView())
-            var fragmentDirection = StartupFlashScreenFragmentDirections.actionStartupFlashScreenFragmentToMainFragment(user)
-            navController.navigate(fragmentDirection)
+        runBlocking {
+            var user =prefuser.getUserObject()
+            if(user != null && user.status.equals("active",true)){
+                Log.d("USER",prefuser.getUserObject().toString())
+                startupViewmodel.isAnimation.set(false)
+                startupViewmodel.progressVisible.set(true)
+                navController = Navigation.findNavController(requireView())
+                var fragmentDirection = StartupFlashScreenFragmentDirections.actionStartupFlashScreenFragmentToMainFragment(user)
+                navController.navigate(fragmentDirection)
+            }
         }
     }
 

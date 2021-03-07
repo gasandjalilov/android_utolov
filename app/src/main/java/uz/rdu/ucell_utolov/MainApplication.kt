@@ -3,10 +3,10 @@ package uz.rdu.ucell_utolov
 import android.annotation.TargetApi
 import android.app.Application
 import android.content.Context
-import android.content.res.Configuration
-import android.content.res.Resources
 import android.os.Build
 import android.util.Log
+import com.squareup.picasso.OkHttp3Downloader
+import com.squareup.picasso.Picasso
 import uz.rdu.ucell_utolov.dagger_implementations.component.ApplicationComponent
 import uz.rdu.ucell_utolov.dagger_implementations.component.DaggerApplicationComponent
 import uz.rdu.ucell_utolov.dagger_implementations.module.ApplicationModule
@@ -24,6 +24,14 @@ class MainApplication:Application() {
         instance = this
         setup()
         component = getApplicationComponent()
+
+            //Picasso
+        val builder = Picasso.Builder(this)
+        builder.downloader(OkHttp3Downloader(this, Long.MAX_VALUE))
+        val built = builder.build()
+        built.setIndicatorsEnabled(true)
+        built.isLoggingEnabled = true
+        Picasso.setSingletonInstance(built)
     }
 
     fun setup() {
@@ -31,6 +39,7 @@ class MainApplication:Application() {
             .applicationModule(ApplicationModule(this)).build()
         component.inject(this)
     }
+
 
 
     fun getApplicationComponent(): ApplicationComponent {

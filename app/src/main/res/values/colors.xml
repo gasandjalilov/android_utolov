@@ -9,6 +9,7 @@
     <color name="colorTextHome">#A1A1A1</color>
     <color name="colorPrimaryAlpha">#CC642887</color>
     <color name="menuBackGround">#F0F0F0</color>
+    <color name="menuBackGroundDark">#717171</color>
     <color name="mainBackGround">#F0F0F0</color>
     <color name="text_shadow">#7F000000</color>
     <color name="purpleBackground">#642887</color>
