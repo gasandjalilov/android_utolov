@@ -339,18 +339,19 @@
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="10dp"
                         android:elevation="0dp"
-                        app:cardElevation="0dp"
-                        android:layout_marginHorizontal="10dp">
+                        android:onClick="@{(view) -> vmodel.getHistory(view)}"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp">
+
                         <TextView
-                            android:layout_marginHorizontal="20dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp"
                             android:text="Все"
-                            android:textSize="16sp"
-                            />
+                            android:textSize="16sp" />
                     </androidx.cardview.widget.CardView>
 
 

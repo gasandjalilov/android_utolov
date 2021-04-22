@@ -6,6 +6,7 @@
     android:orientation="horizontal">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/transactionhistory_card"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_marginHorizontal="10dp"

@@ -56,6 +56,9 @@
         <action
             android:id="@+id/action_homeFragment_to_articleFragment"
             app:destination="@id/articleFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
     </fragment>
 
 
@@ -140,6 +143,10 @@
         android:id="@+id/articleFragment"
         android:name="uz.rdu.ucell_utolov.fragments.ArticleFragment"
         android:label="ArticleFragment" />
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="uz.rdu.ucell_utolov.fragments.HistoryFragment"
+        android:label="HistoryFragment" />
 
 
 </navigation>

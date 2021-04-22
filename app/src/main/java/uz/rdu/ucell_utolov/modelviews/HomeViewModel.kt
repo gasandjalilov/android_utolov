@@ -111,8 +111,11 @@ class HomeViewModel(var user: AdvUser) : ViewModel(),
         }
     }
 
-    override fun getHistory() {
 
+    override fun getHistory(v:View) {
+        var fragmentDirection =
+            HomeFragmentDirections.actionHomeFragmentToHistoryFragment()
+        v.findNavController().navigate(fragmentDirection)
     }
 
     override fun addPack(size: Int) {

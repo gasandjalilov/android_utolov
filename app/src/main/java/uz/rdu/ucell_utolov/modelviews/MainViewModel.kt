@@ -146,7 +146,6 @@ class MainViewModel : MainViewModelInterface, ViewModel() {
     }
 
 
-    @SuppressLint("CheckResult")
     fun setBalance() {
         //var string = context.resources(R.string.home_balance)
         ucellModule.retrieveLastInP2P(TransactionHistoryRequest(user.username!!))

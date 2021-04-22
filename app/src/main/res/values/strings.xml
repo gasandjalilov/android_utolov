@@ -12,6 +12,8 @@
     <string name="login_button">Login</string>
     <string name="registration">Registration</string>
     <string name="activation_info">Код Активации будет отправлен в SMS сообщении. Убедитесь что ваше устройство может принимать их</string>
+    <string name="history_all_transactions">Transactions</string>
+
 
     <!--pin-->
     <string name="pin_enter_pin">Enter OTP</string>

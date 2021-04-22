@@ -138,6 +138,7 @@ class MainActivity : AppCompatActivity() {
             var resultOfCalc = curTime - timeOfStop.value!!
             if (resultOfCalc > 10) {
                 nav.navigate(R.id.pinAuthFragment)
+
                 super.onResume()
             } else {
                 super.onResume()
@@ -214,12 +215,13 @@ class MainActivity : AppCompatActivity() {
 
     fun updateUser() {
 
-        GlobalScope.launch {
+        runBlocking {
             var user: renewTokenResponse? = AuthHelper.getToken(applicationContext)
             var objString = SharedPrefHelper(applicationContext).getUserObject()
             objString?.token = user?.token
             SharedPrefHelper(applicationContext).saveUserObject(objString)
-        }.start()
+            Log.d("RenewToken",objString?.token)
+        }
 
     }
 }
